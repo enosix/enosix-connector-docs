@@ -1,0 +1,19 @@
+= enosix Connector User Manual
+
+== Introduction
+
+enosix provides quicker, easier, and less costly data virtualization between SAP and virtually any front-end application built to support the enterprise. More details on enosix can be found on https://enosix.com[enosix.com].
+
+This connector facilitates the intergration with SAP without using SAP JCO libraries, complicated IDOC, RFC calls and complex transofmrations by using the certified enosix SAP Framework. It provides access to any SAP object configured through the enosix SAP Framework (eg. Sales Documents, Materials, Customers, etc.) with simple user-friendly field names.
+
+Read through this user guide to understand how to configure a basic flowing using the connector. Track feature additions, compatibility, limitations, and API version updates with each release of the connector using the https://release.enosix.io/?tag=MuleSoft%20Connector[Connector Release Notes]. Review the connector operations and functionality using the demo application.
+
+
+=== Operations
+
+The enosix Connector supports two operations:  
+
+* *Check Connection*: This operation is helpful to run the health check in non-development environments.
+* *Search*: This operation is used to retrieve a paginated list of objects matching the provided search criteria in SAP and enable batch synchronization.
+
+image::docs/user_manual/image/00_operations.png[Operations]
