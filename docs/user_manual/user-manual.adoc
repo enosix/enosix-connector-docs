@@ -16,4 +16,4 @@ The enosix Connector supports two operations:
 * *Check Connection*: This operation is helpful to run the health check in non-development environments.
 * *Search*: This operation is used to retrieve a paginated list of objects matching the provided search criteria in SAP and enable batch synchronization.
 
-image::docs/user_manual/image/00_operations.png[Operations]
+image::/docs/user_manual/image/00_operations.png[Operations]
