@@ -1,6 +1,6 @@
-= enosix Connector User Manual
+= *enosix Connector User Manual*
 
-== Introduction
+== *Introduction*
 
 enosix provides quicker, easier, and less costly data virtualization between SAP and virtually any front-end application built to support the enterprise. More details on enosix can be found on https://enosix.com[enosix.com].
 
@@ -9,7 +9,7 @@ This connector facilitates the intergration with SAP without using SAP JCO libra
 Read through this user guide to understand how to configure a basic flowing using the connector. Track feature additions, compatibility, limitations, and API version updates with each release of the connector using the https://release.enosix.io/?tag=MuleSoft%20Connector[Connector Release Notes]. Review the connector operations and functionality using the demo application.
 
 
-== Operations
+== *Operations*
 
 The enosix Connector supports two operations:  
 
@@ -18,33 +18,33 @@ The enosix Connector supports two operations:
 
 image::/docs/user_manual/image/00_operations.png[Operations]
 
-== Prerequisites
+== *Prerequisites*
 
 This document assumes that you are familiar with Mule4, https://www.mulesoft.com/platform/cloud-connectors[Anypoint Connectors], and https://docs.mulesoft.com/studio/7.7/[Anypoint Studio]. This page requires some basic knowledge of https://docs.mulesoft.com/mule-runtime/latest/[Mule Concepts], https://docs.mulesoft.com/mule-runtime/latest/mule-components[Components in a Mule Flow], and https://docs.mulesoft.com/mule-runtime/latest/global-settings-configuration[Global Elements].
 
-=== Hardware and Software Requirements
+==== *Hardware and Software Requirements*
 
 For hardware and software requirements, please visit the https://docs.mulesoft.com/mule-runtime/4.4/hardware-and-software-requirements[Hardware and Software Requirements page].
 
-=== Mule Compatibility
+==== *Mule Compatibility*
 
-=== Mule Compatibility
+==== *Mule Compatibility*
 [%header%autowidth.spread]
-|===
+|====
 |Application/Service |Version
 |Mule Runtime |4.4.x and later
 |Anypoint Studio | 7.13.x and later
-|===
+|====
 
-=== enosix SAP Framework
+==== *enosix SAP Framework*
 
 To use this connector, you need to have a license for the enosix SAP Framework and have the framework configured.
 
-== Installing the Connector
+== *Installing the Connector*
 
 You can install the connector in Anypoint Studio using the instructions in https://docs.mulesoft.com/studio/7.13/add-modules-in-studio-to[Installing a Connector from Anypoint Exchange].
 
-=== Maven Dependency Information
+==== *Maven Dependency Information*
 
 After downloading and installing the connector, the enosix connector will be availabile inside a Mule application for use and will be packaged with the application. Using Anypoint Studio, it will add the Maven dependency automatically.
 
@@ -59,7 +59,7 @@ Check the `pom.xml` file and make sure you have the dependency:
 </dependency>
 ----
 
-== Configuration
+== *Configuration*
 
 * After adding the enosix Connector dependency to your Mule project, click on the *Global Elements* tab at the base of the canvas.
 * In the Global Mule Configuration Elements screen, click *Create*.
@@ -83,7 +83,7 @@ image::/docs/user_manual/image/01_globalconfig.png[Global Config]
 
 Use the *Test Connection* button to validate the provided values and a successful connection to the enosix SAP Framework can be established.
 
-=== Connector Namespace and Schema
+==== *Connector Namespace and Schema*
 
 When designing your application in Anypoint Studio, dragging operations provided by the enosix Connector onto the Anypoint Studio canvas will automatically pupulate the flow XML code with the connector *namespace* and *schema location*.
 
@@ -93,7 +93,7 @@ To add this manually, the Namespace and Schema Location values are:
 |Schema Location |http://www.mulesoft.org/schema/mule/enosix/current/mule-enosix.xsd
 |===
 
-=== Example Empty Mule Flow
+==== *Example Empty Mule Flow*
 [source, XML]
 ----
 <?xml version="1.0" encoding="UTF-8"?> 
@@ -114,13 +114,15 @@ http://www.mulesoft.org/schema/mule/enosix http://www.mulesoft.org/schema/mule/e
 </mule> 
 ----
 
-== Common use cases
+== *Common use cases*
 
-=== Connectivity Check API
+===== *Connectivity Check API*
+  For validating the API has a successful connection to the enosix SAP Framework
 
 image::/docs/user_manual/image/02_check_connectivity.png[Check Connectivity API]
 
-=== Order Search API
+===== *Order Search API*
+  Searching for sales documents, passing search criteria in from the payload of the API
 
 image::/docs/user_manual/image/03_search_orders.png[Order Search API]
 image::/docs/user_manual/image/04_search_order_operation_configuration.png[Order Search Operation Config]
