@@ -9,7 +9,7 @@ This connector facilitates the intergration with SAP without using SAP JCO libra
 Read through this user guide to understand how to configure a basic flowing using the connector. Track feature additions, compatibility, limitations, and API version updates with each release of the connector using the https://release.enosix.io/?tag=MuleSoft%20Connector[Connector Release Notes]. Review the connector operations and functionality using the demo application.
 
 
-=== Operations
+== Operations
 
 The enosix Connector supports two operations:  
 
@@ -83,7 +83,7 @@ image::/docs/user_manual/image/01_globalconfig.png[Global Config]
 
 Use the *Test Connection* button to validate the provided values and a successful connection to the enosix SAP Framework can be established.
 
-== Connector Namespace and Schema
+=== Connector Namespace and Schema
 
 When designing your application in Anypoint Studio, dragging operations provided by the enosix Connector onto the Anypoint Studio canvas will automatically pupulate the flow XML code with the connector *namespace* and *schema location*.
 
@@ -113,3 +113,14 @@ http://www.mulesoft.org/schema/mule/enosix http://www.mulesoft.org/schema/mule/e
 
 </mule> 
 ----
+
+== Common use cases
+
+=== Connectivity Check API
+
+image::/docs/user_manual/image/02_check_connectivity.png[Check Connectivity API]
+
+=== Order Search API
+
+image::/docs/user_manual/image/03_search_orders.png[Order Search API]
+image::/docs/user_manual/image/04_search_order_operation_configuration.png[Order Search Operation Config]
