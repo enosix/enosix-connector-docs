@@ -49,14 +49,15 @@ You can install the connector in Anypoint Studio using the instructions in https
 After downloading and installing the connector, the enosix connector will be availabile inside a Mule application for use and will be packaged with the application. Using Anypoint Studio, it will add the Maven dependency automatically.
 
 Check the `pom.xml` file and make sure you have the dependency:
-```
+[source, xml]
+----
 <dependency>
     <groupId>com.mulesoft.connectors</groupId>
     <artifactId>enosix-connector-v1</artificatId>
     <version>1.0.0</version>
     <classifier>mule-plugin</classifier>
 </dependency>
-```
+----
 
 == Configuration
 
@@ -79,3 +80,36 @@ Check the `pom.xml` file and make sure you have the dependency:
 |===
 
 image::/docs/user_manual/image/01_globalconfig.png[Global Config]
+
+Use the *Test Connection* button to validate the provided values and a successful connection to the enosix SAP Framework can be established.
+
+== Connector Namespace and Schema
+
+When designing your application in Anypoint Studio, dragging operations provided by the enosix Connector onto the Anypoint Studio canvas will automatically pupulate the flow XML code with the connector *namespace* and *schema location*.
+
+To add this manually, the Namespace and Schema Location values are:
+|===
+|Namespace |http://www.mulesoft.org/schema/mule/enosix
+|Schema Location |http://www.mulesoft.org/schema/mule/enosix/current/mule-enosix.xsd
+|===
+
+=== Example Empty Mule Flow
+[source, XML]
+----
+<?xml version="1.0" encoding="UTF-8"?> 
+
+<mule xmlns:enosix="http://www.mulesoft.org/schema/mule/enosix" 
+
+xmlns="http://www.mulesoft.org/schema/mule/core" 
+
+xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
+
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+
+xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd 
+http://www.mulesoft.org/schema/mule/enosix http://www.mulesoft.org/schema/mule/enosix/current/mule-enosix.xsd"> 
+
+  <!-- Add your global configurations here  --> 
+
+</mule> 
+----
