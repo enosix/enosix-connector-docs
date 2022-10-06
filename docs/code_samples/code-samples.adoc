@@ -20,7 +20,6 @@ image::/docs/code_samples/images/samples_01.png[Listner_Config]
 
 image::/docs/code_samples/images/samples_02.png[Metadata_Input]
 
-
 image::/docs/code_samples/images/samples_03.png[Metadata_Output]
 
 [start = 9]
@@ -79,7 +78,7 @@ image::/docs/code_samples/images/samples_07.png[Check Connection]
 8.	Run the test by requesting the Get operation on this url : http://localhost:8081/checkconnection
 9.	You should see connection successful all the parameters in connector configuration are correct
 
-[source,xml]
+[source,xml,linenums]
 
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <enosix_connector>
@@ -90,7 +89,7 @@ image::/docs/code_samples/images/samples_07.png[Check Connection]
 
 10.	If there are any issues with SAP environment or connector configuration you should see the below failure message
 
-[source,xml]
+[source,xml,linenums]
 
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <enosix_connector>
