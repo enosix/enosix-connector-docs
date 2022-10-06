@@ -3,11 +3,12 @@
 ==== The following example will demonstrate how to get Sales document from SAP using mule enosix connector
 
 
-1. In Anypoint Studio, click File > New > Mule Project, name the project, and click OK.
-2. In the Mule Palette, click on the "HTTP" group and select the Listener component. Now drag and drop it into the flow designer.
-3.   First, we need to create a configuration for the HTTP listener before using it. Click on the HTTP listener and add new configuration by pressing the green plus icon.
-4.  Leave the defaults and click OK.
-5.  Set the http Path to /salesdocument
+1. In Anypoint Studio, click File > New > Mule Project, name the project "demo-enosix-connector" and click OK.
+2. Bring the enosix connector to application by installing form mulesoft exchange
+3. In the Mule Palette, click on the "HTTP" group and select the Listener component. Now drag and drop it into the flow designer.
+4.   First, we need to create a configuration for the HTTP listener before using it. Click on the HTTP listener and add new configuration by pressing the green plus icon.
+5.  Leave the defaults and click OK.
+6.  Set the http Path to /salesdocument
 
 image::/docs/code_samples/images/samples_01.png[Listner_Config]
 
@@ -16,16 +17,19 @@ image::/docs/code_samples/images/samples_01.png[Listner_Config]
 7.   Select the Enosix_Config global configuration from connector configurations
 8.	Select the document type to “SFCISalesDocument” it should bring input and output meta data in meta data window
 
-
+9. Your screen should be matching with the below screen shot for input meta data
 
 image::/docs/code_samples/images/samples_02.png[Metadata_Input]
 
+[start = 10]
+10. Your screen should be matching with the below screen shot for output meta data
+
 image::/docs/code_samples/images/samples_03.png[Metadata_Output]
 
-[start = 9]
+[start = 11]
 
-9.	Enter the page size and page number both parameters support hard code value and expression mode in this example I’m reading query parameters
-10.	 Enter the search input this one also support hard coded and expression mode I’m writing simple datawevae to read SoldToParty from query parameters
+11.	Enter the page size and page number both parameters support hard code value and expression mode in this example I’m reading query parameters
+12.	 Enter the search input this one also support hard coded and expression mode I’m writing simple datawevae to read SoldToParty from query parameters
 
 [source, json5,linenums]
 
