@@ -1,4 +1,4 @@
-== Example Use Case for search operation
+== enosix Connector search operation example
 
 ==== The following example will demonstrate how to get Sales document from SAP using mule enosix connector
 
@@ -60,3 +60,39 @@ image::/docs/code_samples/images/samples_06.png[Search_Flow]
 
 [start = 16]
 16.	You can search the different document types by changing the input type and search input
+
+
+== enosix Connector check connection operation example
+
+1.	Create the simple mule application using anypoint studio
+2.	Bring the enosix connector to application by installing form mulesoft exchange
+3.	Create global configuration for enosix connector
+4.	Drag and drop simple http listener, create global configuration accept default parameters and give http path as /checkconnection
+5.	Drag and drop check connection operation and provide enosix global config as connector configurations
+6.	Save the application and flow should looks like below
+
+
+image::/docs/code_samples/images/samples_07.png[Check Connection]
+
+[start = 7]
+7.	Run the mule application and make sure started without any errors
+8.	Run the test by requesting the Get operation on this url : http://localhost:8081/checkconnection
+9.	You should see connection successful all the parameters in connector configuration are correct
+
+[source,xml]
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<enosix_connector>
+    <message>Connection check successful</message>
+</enosix_connector>
+
+[start = 10]
+
+10.	If there are any issues with SAP environment or connector configuration you should see the below failure message
+
+[source,xml]
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<enosix_connector>
+    <message>Connection check failed</message>
+</enosix_connector>
