@@ -1,0 +1,62 @@
+== Example Use Case for search operation
+
+==== The following example will demonstrate how to get Sales document from SAP using mule enosix connector
+
+
+1. In Anypoint Studio, click File > New > Mule Project, name the project, and click OK.
+2. In the Mule Palette, click on the "HTTP" group and select the Listener component. Now drag and drop it into the flow designer.
+3.   First, we need to create a configuration for the HTTP listener before using it. Click on the HTTP listener and add new configuration by pressing the green plus icon.
+4.  Leave the defaults and click OK.
+5.  Set the http Path to /salesdocument
+
+image::/docs/code_samples/images/samples_01.png[Listner_Config]
+
+[start = 6]
+6.   Drag and drop the search operation from enosix connector mule palette
+7.   Select the Enosix_Config global configuration from connector configurations
+8.	Select the document type to “SFCISalesDocument” it should bring input and output meta data in meta data window
+
+
+
+image::/docs/code_samples/images/samples_02.png[Metadata_Input]
+
+
+image::/docs/code_samples/images/samples_03.png[Metadata_Output]
+
+[start = 9]
+
+9.	Enter the page size and page number both parameters support hard code value and expression mode in this example I’m reading query parameters
+10.	 Enter the search input this one also support hard coded and expression mode I’m writing simple datawevae to read SoldToParty from query parameters
+
+[source, json5,linenums]
+
+%dw 2.0
+output application/xml skipNullOn="everywhere"
+---
+SFCISalesDocument_SC: {
+SEARCHPARAMS @(
+SoldToParty: attributes.queryParams.soldToParty,
+tablerowstate: 'inserted' ) : null
+}
+
+[start = 11]
+
+11.	Leave the rest of the search parameters language, sessions close and Timeout in Milliseconds to default or values of your choice. So the final search operation configuration looks like below screen shot
+
+
+image::/docs/code_samples/images/samples_04.png[Search_Config]
+
+[start = 12]
+12.	Save the application and final flow should looks like this
+
+image::/docs/code_samples/images/samples_05.png[Search_Flow]
+
+[start = 13]
+13.	Run the application in Anypoint studio and make sure started without any errors
+14.	Test the application using simple GET method and this URL http://localhost:8081/salesdocument?soldToParty=500070&pageNumber=1&pageSize=2
+15.	You should be seeing the two sales documents from SAP for 500070 SoldToParty
+
+image::/docs/code_samples/images/samples_06.png[Search_Flow]
+
+[start = 16]
+16.	You can search the different document types by changing the input type and search input
