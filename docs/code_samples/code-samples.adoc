@@ -53,12 +53,8 @@ image::/docs/code_samples/images/samples_05.png[Search_Flow]
 
 [start = 13]
 13.	Run the application in Anypoint studio and make sure started without any errors
-14.	Test the application using simple GET method and this URL http://localhost:8081/salesdocument?soldToParty=500070&pageNumber=1&pageSize=2
-15.	You should be seeing the two sales documents from SAP for 500070 SoldToParty
-
-image::/docs/code_samples/images/samples_06.png[Search_Flow]
-
-[start = 16]
+14.	Test the application using simple GET method and this URL http://localhost:8081/salesdocument?soldToParty={soldToPary}&pageNumber=1&pageSize=2
+15.	You should be seeing the two sales documents from SAP for SoldToParty number you passes
 16.	You can search the different document types by changing the input type and search input
 
 
