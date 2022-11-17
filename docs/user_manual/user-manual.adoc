@@ -4,14 +4,14 @@
 
 enosix provides quicker, easier, and less costly data virtualization between SAP and virtually any front-end application built to support the enterprise. More details on enosix can be found on https://enosix.com[enosix.com].
 
-This connector facilitates the intergration with SAP without using SAP JCO libraries, complicated IDOC, RFC calls and complex transformations by using the certified enosix SAP Framework. It provides access to any SAP object configured through the enosix SAP Framework (eg. Sales Documents, Materials, Customers, etc.) with simple user-friendly field names.
+This connector facilitates the integration with SAP without using SAP JCO libraries, complicated IDOC, RFC calls and complex transformations by using the certified enosix SAP Framework. It provides access to any SAP object configured through the enosix SAP Framework (eg. Sales Documents, Materials, Customers, etc.) with simple user-friendly field names.
 
 Read through this user guide to understand how to configure a basic flow using the connector. Track feature additions, compatibility, limitations, and API version updates with each release of the connector using the https://release.enosix.io/?tag=MuleSoft%20Connector[Connector Release Notes]. Review the connector operations and functionality using the demo application.
 
 
 == *Operations*
 
-The enosix Connector supports two operations:  
+The enosix Connector supports two operations:
 
 * *Check Connection*: This operation is helpful to run the health check in non-development environments.
 * *Search*: This operation is used to retrieve a paginated list of objects matching the provided search criteria in SAP and enable batch synchronization.
@@ -64,24 +64,40 @@ Check the `pom.xml` file and make sure you have the dependency:
 * In the Global Mule Configuration Elements screen, click *Create*.
 * In the filter window, search for *enosix* and select the *Enosix Config* from the connector.
 
+* Connection tab
 [%header%autowidth.spread]
 |===
 |Field Name |Type |Value |Required
 |Url |String |Enter the SAP Url |X
-|User |String |Enter the SAP username |X
+|UserName |String |Enter the SAP username |X
 |Password |String |Enter the SAP password |X
-|Tls context|TlsContextFactory |Select edit inline option and check the insecure option |X
 |XSD Path |String |Create a folder under mule project {mule_project}/src/main/resource/{enosix_xsd} and select this path |X
 |Client |int |Enter the number for your SAP client |
-|Language |String |Enter a language to be passed on the https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/8b/46468c433b40c3b87b2e07f34dea1b/content.htm?no_cache=true[sap-language parameter] | 
-|Timeout in Milliseconds |int |Enter the amount of time to wait for a reply from the enosix SAP Framework | 
+|Language |String |Enter a language to be passed on the https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/8b/46468c433b40c3b87b2e07f34dea1b/content.htm?no_cache=true[sap-language parameter] |
 |Session close |boolean |Enter whether to leave the session open or closed after each request. Defaults to true | X
+|Response Timeout Unit | java.util.concurrent.TimeUnit |Enter the unit of time to wait for a reply from the enosix SAP Framework, defaults to SECONDS |
+|Response Timeout  |int |Enter the amount of time to wait for a reply from the enosix SAP Framework |
 |===
 
 image::/docs/user_manual/image/01_globalconfig.png[Global Config]
 
-  
-  
+
+* Proxy tab
+[%header%autowidth.spread]
+|===
+|Field Name |Type |Value |Required
+|TLS Configuration | TlsContextFactory |
+|===
+
+
+* Tls tab
+[%header%autowidth.spread]
+|===
+|Field Name |Type |Value |Required
+|TLS Configuration | TlsContextFactory |
+|===
+
+
 Use the *Test Connection* button to confirm the provided values are valid and a successful connection to the enosix SAP Framework can be established.
 
 ==== *Connector Namespace and Schema*
@@ -97,22 +113,22 @@ To add this manually, the Namespace and Schema Location values are:
 ==== *Example Empty Mule Flow*
 [source, XML]
 ----
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:enosix="http://www.mulesoft.org/schema/mule/enosix" 
+<mule xmlns:enosix="http://www.mulesoft.org/schema/mule/enosix"
 
-xmlns="http://www.mulesoft.org/schema/mule/core" 
+xmlns="http://www.mulesoft.org/schema/mule/core"
 
-xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
+xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
 
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
-xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd 
-http://www.mulesoft.org/schema/mule/enosix http://www.mulesoft.org/schema/mule/enosix/current/mule-enosix.xsd"> 
+xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/enosix http://www.mulesoft.org/schema/mule/enosix/current/mule-enosix.xsd">
 
-  <!-- Add your global configurations here  --> 
+  <!-- Add your global configurations here  -->
 
-</mule> 
+</mule>
 ----
 
 == *Common use cases*
