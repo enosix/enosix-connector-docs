@@ -65,9 +65,10 @@ Check the `pom.xml` file and make sure you have the dependency:
 * In the filter window, search for *enosix* and select the *Enosix Config* from the connector.
 
 * Connection tab
-[%header%autowidth.spread]
+
 |===
 |Field Name |Type |Value |Required
+
 |Url |String |Enter the SAP Url |X
 |UserName |String |Enter the SAP username |X
 |Password |String |Enter the SAP password |X
@@ -77,26 +78,52 @@ Check the `pom.xml` file and make sure you have the dependency:
 |Session close |boolean |Enter whether to leave the session open or closed after each request. Defaults to true | X
 |Response Timeout Unit | java.util.concurrent.TimeUnit |Enter the unit of time to wait for a reply from the enosix SAP Framework, defaults to SECONDS |
 |Response Timeout  |int |Enter the amount of time to wait for a reply from the enosix SAP Framework |
+
 |===
 
 image::/docs/user_manual/image/01_globalconfig.png[Global Config]
 
 
 * Proxy tab
-[%header%autowidth.spread]
-|===
-|Field Name |Type |Value |Required
-|TLS Configuration | TlsContextFactory |
-|===
+
+*Proxy config* supports the standard proxy configuration for http(s) calls.
+
+Proxy config has three options
 
 
-* Tls tab
-[%header%autowidth.spread]
 |===
-|Field Name |Type |Value |Required
-|TLS Configuration | TlsContextFactory |
+| Type | Description
+
+| None | No proxy configuration and default
+
+|Edit Inline  | Proxy config from UI with required Host, Port and optional Username, Password &  Non proxy hosts
+
+|Bean Reference | This supports mule stand bean delineation proxy
+
 |===
 
+Example screenshot PRoxy Edit Inline
+
+image::/docs/user_manual/image/01_globalconfig_proxy.png[Proxy Config]
+
+
+*Tls tab*
+
+TLS Configuration has three options
+|===
+| Type | Description
+
+| None | No TLS configuration and default works for http based clients
+
+|Edit Inline  | This is Tls configuration from UI and provide the details or Choose Insecure check box for https calls without Tls.
+
+|Bean Reference | This supports mule stand spring bean definition for Tls.
+
+|===
+
+Example screenshot of Tls EditInline option for https call with insecure option
+
+image::/docs/user_manual/image/01_globalconfig_tls.png[Tls Config]
 
 Use the *Test Connection* button to confirm the provided values are valid and a successful connection to the enosix SAP Framework can be established.
 
