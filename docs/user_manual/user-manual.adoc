@@ -70,7 +70,7 @@ Check the `pom.xml` file and make sure you have the dependency:
 |Field Name |Type |Value |Required
 
 |Url |String |Enter the SAP Url |X
-|UserName |String |Enter the SAP username |X
+|Username |String |Enter the SAP username |X
 |Password |String |Enter the SAP password |X
 |XSD Path |String |Create a folder under mule project {mule_project}/src/main/resource/{enosix_xsd} and select this path |X
 |Client |int |Enter the number for your SAP client |
@@ -84,7 +84,8 @@ Check the `pom.xml` file and make sure you have the dependency:
 image::/docs/user_manual/image/01_globalconfig.png[Global Config]
 
 
-* Proxy tab
+
+*Proxy tab*
 
 *Proxy config* supports the standard proxy configuration for http(s) calls.
 
@@ -102,7 +103,7 @@ Proxy config has three options
 
 |===
 
-Example screenshot PRoxy Edit Inline
+Example screenshot Proxy Edit Inline option
 
 image::/docs/user_manual/image/01_globalconfig_proxy.png[Proxy Config]
 
