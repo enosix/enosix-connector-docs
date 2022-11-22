@@ -85,11 +85,6 @@ image::/docs/code_samples/images/samples_07.png[Check Connection]
 
 [start = 10]
 
-10.	If there are any issues with SAP environment or connector configuration you should see the below failure message
+10.	If there are any issues with SAP environment or connector configuration you should see the corresponding error message in console log.
 
-[source,xml,linenums]
 
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<enosix_connector>
-    <message>Connection check failed</message>
-</enosix_connector>
