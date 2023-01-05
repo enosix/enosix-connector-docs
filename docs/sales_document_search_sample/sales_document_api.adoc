@@ -1,6 +1,6 @@
 = *Sales document search API implementation using enosix mule connector*
 
-== *Pre requites to follow along this tutorial*
+== *Pre-requites to follow along this tutorial*
 
 * Anypoint Studio installed and in working condition.
 * enosix SAP connector for Mule 4 trail account or valid license
@@ -24,8 +24,10 @@ image::/docs/sales_document_search_sample/image/02_select_raml.png[Select RAML]
 +
 image::/docs/sales_document_search_sample/image/03_finish_project_creation.png[Finish project creation]
 6. Now the base project with scaffold flow created with main apikit router, apikit console and end point implementation skeleton private flow.
++
 image::/docs/sales_document_search_sample/image/04_scaffold_flow.png[Scaffold flow]
 7. Now add enosix SAP connector for Mule 4 dependency to project. Click the search in exchange in *Mule Palette*, if you are not already login, login to exchange and search for enosix. You will find *enosix SAP Connector - Mule 4*
++
 image::/docs/sales_document_search_sample/image/05_connector_search.png[Connector search]
 8. Click *Add>* and *finish* button, enosix connector dependency add to your project. Make sure you have  ths dependency in pom.xml.
 +
@@ -41,7 +43,7 @@ image::/docs/sales_document_search_sample/image/05_connector_search.png[Connecto
 </dependency>
 ----
 +
-9. Drag and drop search operation from enosix connector in to private flow
+9. Drag and drop search operation from enosix connector in to enpoint implementation private flow
 +
 image::/docs/sales_document_search_sample/image/06_search_operation.png[Search operation]
 10. Configure search operation, create a global configuration for connector by selecting green **+** in search operation configuration.
@@ -57,11 +59,11 @@ f. Go to TLS tab, select *Edit inline* and select insecure option.
 g. Click *Test connection* operation, once connection tested successful, click *OK* button
 h. global configuration completed
 +
-Security reason original url, username and password taken out from screenshot to get Idea here is the screenshot with dummy values.
+Security reason original url, username and password taken out from screenshot, to get Idea here is the screenshot with dummy values.
 +
 image::/docs/sales_document_search_sample/image/08_global_config.png[Gloabl config]
 
-11. You have Enosix_Config global configuration in Connector configuration fill out the reaming config parameters for search operation
+11. You have Enosix_Config global configuration in Connector configuration, fill out the reaming config parameters for search operation
 +
 image::/docs/sales_document_search_sample/image/09_enosix_config.png[Enosix config]
 12. Select Type *SFCISalesDocument* from drop down list
@@ -103,9 +105,9 @@ SFCISalesDocument_SC: {
 ----
 +
 17. Search operation configuration completed, your configuration should look like below screenshot.
-
-image::/docs/sales_document_search_sample/image/10_search_conf_complete.png[Search config complete]
 +
+image::/docs/sales_document_search_sample/image/10_search_conf_complete.png[Search config complete]
+
 18. Work on the transformation step to convert search operation xml to json. Click on the Transform message dataweave component, remove the sample json document out there. Copy and paste below dataweave code into transformation
 +
 .Transform connector output xml to json using dataweave
