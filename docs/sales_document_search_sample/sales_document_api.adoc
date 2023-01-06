@@ -1,10 +1,13 @@
 = *Sales document search API implementation using enosix mule connector*
 
+*Note* : Instructions cover for both RAML and OAS specification, please use the type API specification you are interested in.
+
 == *Pre-requites to follow along this tutorial*
 
 * Anypoint Studio installed and in working condition.
 * enosix SAP connector for Mule 4 trail account or valid license
-* Download the SalesDocument RAML specification from here https://github.com/enosix/enosix-sales-document-api/blob/main/Sales_Document_Search-1.0.1-raml.zip[RAML]
+* Download the SalesDocument https://github.com/enosix/enosix-sales-document-api/blob/main/Sales_Document_Search-1.0.1-raml.zip[RAML] or
+https://github.com/enosix/enosix-sales-document-api/blob/main/OAS/SalesDocument_OAS.json[OAS]  specification
 
 == *Steps to create mule sales document search API*
 
@@ -12,15 +15,15 @@
 +
 image::/docs/sales_document_search_sample/image/01_new_project.png[New project]
 
-2. Make sure *Scaffold flows from these API specifications* check mark selected. You can use the RAML from local file system or import a published API option(from exchange), depends on you have RAML locally or directly refer from exchange as maven dependency.
+2. Make sure *Scaffold flows from these API specifications* check mark selected. You can use the RAML or OAS from local file system or import a published API option(from exchange), depends on you have RAML or OAS locally, or directly refer from exchange as maven dependency.
 
-3. if you selected local file system choose the RAML *Sales_Document_Search-1.0.1-raml.zip* location and click the finish button. Skip step 4 & 5 go to 6
+3. if you selected local file system choose the RAML *Sales_Document_Search-1.0.1-raml.zip* or OAS *SalesDocument_OAS* location and click the finish button. Skip step 4 & 5 go to 6
 
-4. Make sure you have downloaded RAML zip file uploaded to your exchange.Choose import a published API click green + (*Add new dependency*) button, you will be prompted exchange credentials and enter credentials. Search for enosix, you will find *Sales Document Search* RAML file, here is the screenshot.
+4. Make sure you have downloaded RAML zip file or OAS json, uploaded to your exchange.Choose import a published API click green + (*Add new dependency*) button, you will be prompted exchange credentials and enter credentials. Search for *Sales Document*, you will find *Sales Document Search* RAML or OAS *SalesDocument_OAS* file, here is the screenshot for RAML.
 +
 image::/docs/sales_document_search_sample/image/02_select_raml.png[Select RAML]
 
-5. Select the *Sales Document Search* RAML file and click **Add>** and *finish* button.
+5. Select the *Sales Document Search* RAML file or *SalesDocument_OAS* OAS and click **Add>** and *finish* button.
 +
 image::/docs/sales_document_search_sample/image/03_finish_project_creation.png[Finish project creation]
 6. Now the base project with scaffold flow created with main apikit router, apikit console and end point implementation skeleton private flow.
@@ -188,3 +191,5 @@ output application/json skipNullOn="everywhere"
 
 Complete source code for this API is available in this link you can download and run in Anypoint studio.
 https://github.com/enosix/enosix-sales-document-api[enosix-sales-document-api]
+
+Make sure you update the properties file with correct information https://github.com/enosix/enosix-sales-document-api/blob/main/src/main/resources/env.properties[env.properties]
