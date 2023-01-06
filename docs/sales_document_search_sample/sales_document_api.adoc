@@ -189,7 +189,6 @@ output application/json skipNullOn="everywhere"
 19. Now the code completed for API implementation.You can run the project by right click anywhere on the flow. Make sure flow started without any errors by checking the console logs.
 20. Send a request from postman / browser in this format  http://localhost:8081/api/search/salesdocument?soldToParty=2200&pageSize=100&pageNumber=1
 
-Complete source code for this API is available in this link you can download and run in Anypoint studio.
-https://github.com/enosix/enosix-sales-document-api[enosix-sales-document-api]
+Complete source code for this API is available here https://github.com/enosix/enosix-sales-document-api[enosix-sales-document-api] you can download and run in Anypoint studio.
 
 Make sure you update the properties file with correct information https://github.com/enosix/enosix-sales-document-api/blob/main/src/main/resources/env.properties[env.properties]
