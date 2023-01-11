@@ -2,7 +2,7 @@
 
 *Note* : Instructions cover for both RAML and OAS specification, please use the type of API specification you are interested in.
 
-== *Pre-requites to follow along this tutorial*
+== *Pre-requisites to follow along this tutorial*
 
 * Anypoint Studio installed and in working condition.
 * enosix SAP connector for Mule 4 trail account or valid license.
@@ -17,22 +17,22 @@ image::/docs/sales_document_search_sample/image/01_new_project.png[New project]
 
 2. Make sure *Scaffold flows from these API specifications* check mark selected. You can use the RAML or OAS from local file system or import a published API option(from exchange), depends on you have RAML or OAS locally, or directly refer from exchange as maven dependency.
 
-3. if you selected local file system choose the RAML *Sales_Document_Search-1.0.1-raml.zip* or OAS *SalesDocument_OAS* location and click the finish button. Skip step 4 & 5 go to 6.
+3. If you selected local file system choose the RAML *Sales_Document_Search-1.0.1-raml.zip* or OAS *SalesDocument_OAS* location and click the finish button. Skip step 4 & 5 go to 6.
 
-4. Make sure you have downloaded RAML zip file or OAS json, uploaded to your exchange.Choose import a published API click green + (*Add new dependency*) button, you will be prompted exchange credentials and enter credentials. Search for *Sales Document*, you will find *Sales Document Search* RAML or *SalesDocument_OAS* OAS file, here is the screenshot for RAML.
+4. Make sure you have downloaded RAML zip file or OAS json, uploaded to your exchange. Choose import a published API, click green + (*Add new dependency*) button, you will be prompted exchange credentials and enter credentials. Search for *Sales Document*, you will find *Sales Document Search* RAML or *SalesDocument_OAS* OAS file, here is the screenshot for RAML.
 +
 image::/docs/sales_document_search_sample/image/02_select_raml.png[Select RAML]
 
-5. Select the *Sales Document Search* RAML file or *SalesDocument_OAS* OAS and click **Add>** and *finish* button.
+5. Select the *Sales Document Search* RAML file or *SalesDocument_OAS* OAS and click **Add>** and *Finish* button.
 +
 image::/docs/sales_document_search_sample/image/03_finish_project_creation.png[Finish project creation]
 6. Now the base project with scaffold flow created with main apikit router, apikit console and end point implementation skeleton private flow.
 +
 image::/docs/sales_document_search_sample/image/04_scaffold_flow.png[Scaffold flow]
-7. Now add enosix SAP connector for Mule 4 dependency to project. Click the search in exchange in *Mule Palette*, if you are not already login, login to exchange and search for enosix. You will find *enosix SAP Connector - Mule 4*.
+7. Now add enosix SAP connector for Mule 4 dependency to project. Click the search in exchange in *Mule Palette*, if you are not already logged in, login to exchange and search for enosix. You will find *enosix SAP Connector - Mule 4*.
 +
 image::/docs/sales_document_search_sample/image/05_connector_search.png[Connector search]
-8. Click *Add>* and *finish* button, enosix connector dependency add to your project. Make sure you have below dependency in pom.xml.
+8. Click *Add>* and *Finish* button, enosix connector dependency add to your project. Make sure you have below dependency in pom.xml.
 +
 .pom.xml
 [source,XML]
@@ -46,7 +46,7 @@ image::/docs/sales_document_search_sample/image/05_connector_search.png[Connecto
 </dependency>
 ----
 +
-9. Drag and drop search operation from enosix connector in to enpoint implementation private flow.
+9. Drag and drop search operation from mule palette enosix connector into endpoint implementation private flow.
 +
 image::/docs/sales_document_search_sample/image/06_search_operation.png[Search operation]
 10. Configure search operation, create a global configuration for connector by selecting green **+** in search operation configuration.
@@ -66,15 +66,15 @@ Security reason original url, username and password taken out from screenshot, t
 +
 image::/docs/sales_document_search_sample/image/08_global_config.png[Gloabl config]
 
-11. You have Enosix_Config global configuration in Connector configuration, fill out the reaming config parameters for search operation.
+11. Enosix_Config has been configured with valid values, fill out the remaining config parameters for the General section for the Search operation.
 +
 image::/docs/sales_document_search_sample/image/09_enosix_config.png[Enosix config]
-12. Select Type *SFCISalesDocument* from drop down list.
-13. Click the *fx* icon for Page size,Page number and Search Input as we are entering the expression for these three parameters.
+a. Select Type *SFCISalesDocument* from drop down list.
+b. Click the *fx* icon for Page size,Page number and Search Input as we are entering the expression for these three parameters.
 
-14. Enter Page size as *attributes.queryParams.pageSize*.
-15. Enter Page Number as *attributes.queryParams.pageNumber*.
-16. Enter search input below dataweave code. This dataweave code is creating XML input format required for connector.
+c. Enter Page size as *attributes.queryParams.pageSize*.
+d. Enter Page Number as *attributes.queryParams.pageNumber*.
+e. Enter the following dataweave code into the Search input field. This dataweave code is creating XML input format required for connector.
 +
 .Search Input
 [source,dataweave]
