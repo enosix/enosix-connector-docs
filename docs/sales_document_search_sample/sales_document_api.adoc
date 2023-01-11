@@ -15,24 +15,24 @@ https://github.com/enosix/enosix-sales-document-api/blob/main/OAS/SalesDocument_
 +
 image::/docs/sales_document_search_sample/image/01_new_project.png[New project]
 
-2. Make sure *Scaffold flows from these API specifications* check mark selected. You can use the RAML or OAS from local file system or import a published API option(from exchange), depends on you have RAML or OAS locally, or directly refer from exchange as maven dependency.
+2. Make sure *Scaffold flows from these API specifications* check mark selected. You can use the RAML or OAS from local file system or import a published API option(from exchange), depends on if you have RAML or OAS locally, or directly refer from exchange as maven dependency.
 
-3. If you selected local file system choose the RAML *Sales_Document_Search-1.0.1-raml.zip* or OAS *SalesDocument_OAS* location and click the finish button. Skip step 4 & 5 go to 6.
+3. If you selected local file system choose the RAML *Sales_Document_Search-1.0.1-raml.zip* or OAS *SalesDocument_OAS* location and click the *Finish* button. Skip step 4 & 5 go to 6.
 
-4. Make sure you have downloaded RAML zip file or OAS json, uploaded to your exchange. Choose import a published API, click green + (*Add new dependency*) button, you will be prompted exchange credentials and enter credentials. Search for *Sales Document*, you will find *Sales Document Search* RAML or *SalesDocument_OAS* OAS file, here is the screenshot for RAML.
+4. Make sure you have downloaded RAML zip file or OAS json, uploaded to your exchange. Choose import a published API, click green + (*Add new dependency*) button, you will be prompted to enter exchange credentials. Search for *Sales Document*, you will find *Sales Document Search* RAML or *SalesDocument_OAS* OAS file, here is the screenshot for RAML.
 +
 image::/docs/sales_document_search_sample/image/02_select_raml.png[Select RAML]
 
 5. Select the *Sales Document Search* RAML file or *SalesDocument_OAS* OAS and click **Add>** and *Finish* button.
 +
 image::/docs/sales_document_search_sample/image/03_finish_project_creation.png[Finish project creation]
-6. Now the base project with scaffold flow created with main apikit router, apikit console and end point implementation skeleton private flow.
+6. Now the base project with scaffold flow is created with main apikit router, apikit console and end point implementation skeleton private flow.
 +
 image::/docs/sales_document_search_sample/image/04_scaffold_flow.png[Scaffold flow]
 7. Now add enosix SAP connector for Mule 4 dependency to project. Click the search in exchange in *Mule Palette*, if you are not already logged in, login to exchange and search for enosix. You will find *enosix SAP Connector - Mule 4*.
 +
 image::/docs/sales_document_search_sample/image/05_connector_search.png[Connector search]
-8. Click *Add>* and *Finish* button, enosix connector dependency add to your project. Make sure you have below dependency in pom.xml.
+8. Click *Add>* and *Finish* button, enosix connector dependency is added to your project. Make sure you have below dependency in pom.xml.
 +
 .pom.xml
 [source,XML]
@@ -53,12 +53,12 @@ image::/docs/sales_document_search_sample/image/06_search_operation.png[Search o
 +
 image::/docs/sales_document_search_sample/image/07_search_config.png[Search config]
 
-a. URL : enter the enosix SAP framework endpoint.
-b. username: enter the user name for enosix SAP framework.
-c. password: enter the password for enosix SAP framework.
+a. URL: enter the enosix SAP framework endpoint.
+b. Username: enter the user name for enosix SAP framework.
+c. Password: enter the password for enosix SAP framework.
 d. XSD Path: create a new folder *xsd* under src/main/resource and give the path here.
 e. Client: enter the SAP instance client number.
-f. Go to TLS tab, select *Edit inline* and select insecure option.
+f. Go to TLS tab, select *Edit inline* and select Insecure option.
 g. Click *Test connection* operation, once connection tested successful, click *OK* button.
 h. Global configuration completed.
 +
@@ -73,7 +73,7 @@ a. Select Type *SFCISalesDocument* from drop down list.
 b. Click the *fx* icon for Page size, Page number and Search Input as we are entering the expression for these three parameters.
 
 c. Enter Page size as *attributes.queryParams.pageSize*.
-d. Enter Page Number as *attributes.queryParams.pageNumber*.
+d. Enter Page number as *attributes.queryParams.pageNumber*.
 e. Enter the following dataweave code into the Search input field. This dataweave code is creating XML input format required for connector.
 +
 .Search Input
@@ -186,7 +186,7 @@ output application/json skipNullOn="everywhere"
 }
 ----
 +
-14. Now the code completed for API implementation, run the project . Make sure flow started without any errors by checking the console logs.
+14. Now the code is completed for API implementation, run the project . Make sure flow started without any errors by checking the console logs.
 15. Send a request from postman / browser in this format  http://localhost:8081/api/search/salesdocument?soldToParty=2200&pageSize=100&pageNumber=1
 
 
