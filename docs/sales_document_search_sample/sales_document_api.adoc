@@ -70,7 +70,7 @@ image::/docs/sales_document_search_sample/image/08_global_config.png[Gloabl conf
 +
 image::/docs/sales_document_search_sample/image/09_enosix_config.png[Enosix config]
 a. Select Type *SFCISalesDocument* from drop down list.
-b. Click the *fx* icon for Page size,Page number and Search Input as we are entering the expression for these three parameters.
+b. Click the *fx* icon for Page size, Page number and Search Input as we are entering the expression for these three parameters.
 
 c. Enter Page size as *attributes.queryParams.pageSize*.
 d. Enter Page Number as *attributes.queryParams.pageNumber*.
