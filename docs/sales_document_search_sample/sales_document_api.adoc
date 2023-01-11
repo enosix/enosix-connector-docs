@@ -107,11 +107,11 @@ SFCISalesDocument_SC: {
 }
 ----
 +
-17. Search operation configuration completed, your configuration should look like below screenshot.
+12. Search operation configuration completed, your configuration should look like below screenshot.
 +
 image::/docs/sales_document_search_sample/image/10_search_conf_complete.png[Search config complete]
 
-18. Work on the transformation step to convert search operation xml to json. Click on the Transform message dataweave component, remove the sample json document out there. Copy and paste below dataweave code into transformation.
+13. Work on the transformation step to convert search operation xml to json. Click on the Transform message dataweave component, remove the sample json document out there. Copy and paste below dataweave code into transformation.
 +
 .Transform connector output xml to json using dataweave
 [source,dataweave]
@@ -186,8 +186,10 @@ output application/json skipNullOn="everywhere"
 }
 ----
 +
-19. Now the code completed for API implementation, run the project . Make sure flow started without any errors by checking the console logs.
-20. Send a request from postman / browser in this format  http://localhost:8081/api/search/salesdocument?soldToParty=2200&pageSize=100&pageNumber=1
+14. Now the code completed for API implementation, run the project . Make sure flow started without any errors by checking the console logs.
+15. Send a request from postman / browser in this format  http://localhost:8081/api/search/salesdocument?soldToParty=2200&pageSize=100&pageNumber=1
+
+
 
 Complete source code for this API is available here https://github.com/enosix/enosix-sales-document-api[enosix-sales-document-api] you can download and run in Anypoint studio.
 
