@@ -8,6 +8,7 @@ This connector facilitates the integration with SAP without using SAP JCO librar
 
 Read through this user guide to understand how to configure a basic flow using the connector. Track feature additions, compatibility, limitations, and API version updates with each release of the connector using the https://releases.enosix.io/?tag=MuleSoft%20Connector[Connector Release Notes]. Review the connector operations and functionality using the demo application.
 
+NOTE: If you would like to test out the enosix Connector in a trial environment please fill out this https://go.enosix.com/l/957862/2023-01-30/cw38r[Trial Form,role=external,window=_blank]
 
 == *Operations*
 
