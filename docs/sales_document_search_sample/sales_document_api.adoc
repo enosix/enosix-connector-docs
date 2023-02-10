@@ -53,9 +53,9 @@ image::/docs/sales_document_search_sample/image/06_search_operation.png[Search o
 +
 image::/docs/sales_document_search_sample/image/07_search_config.png[Search config]
 
-a. URL: enter the enosix SAP framework endpoint.
-b. Username: enter the user name for enosix SAP framework.
-c. Password: enter the password for enosix SAP framework.
+a. URL: `https://trial.enosix.io/trialecc`
+b. Username: enter the user name for enosix SAP framework you received in your trial signup email.
+c. Password: enter the password for enosix SAP framework you received in your trial signup email.
 d. XSD Path: create a new folder *xsd* under src/main/resource and give the path here.
 e. Client: enter the SAP instance client number.
 f. Go to TLS tab, select *Edit inline* and select Insecure option.
