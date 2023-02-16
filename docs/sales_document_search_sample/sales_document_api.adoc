@@ -117,7 +117,7 @@ image::/docs/sales_document_search_sample/image/10_search_conf_complete.png[Sear
 [source,dataweave]
 ----
 %dw 2.0
-output application/xml skipNullOn="everywhere"
+output application/json skipNullOn="everywhere"
 fun convert(strBoolean)  = if(strBoolean)  'X'  else ''
 
 %dw 2.0
