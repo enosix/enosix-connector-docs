@@ -1,4 +1,4 @@
-= *Sales document search API implementation using enosix mule connector*
+= *Sales document search API implementation using enosix SAP Connector for Mule 4*
 
 *Note* : Instructions cover for both RAML and OAS specification, please use the type of API specification you are interested in.
 
