@@ -5,7 +5,7 @@
 == *Pre-requisites to follow along this tutorial*
 
 * Anypoint Studio installed and in working condition.
-* enosix SAP connector for Mule 4 trail account or valid license.
+* enosix SAP connector for Mule 4 trial account or valid license.
 * Download the sales document https://github.com/enosix/enosix-sales-document-api/blob/main/Sales_Document_Search-1.0.1-raml.zip[RAML] or
 https://github.com/enosix/enosix-sales-document-api/blob/main/OAS/SalesDocument_OAS.json[OAS]  specification.
 
