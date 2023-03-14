@@ -188,8 +188,8 @@ image::/docs/user_manual/image/05_Get_Configuration.png[Get PO Config]
 
  create a new sleas document in SAP from external / internal integratied application.
 
-image::/docs/user_manual/image/06_Create_Config.png[Create SalesDoc Flow]
-image::/docs/user_manual/image/06_Create_SalesDoc.png[Create Config]
+image::/docs/user_manual/image/06_Create_SalesDoc.png[Create SalesDoc Flow]
+image::/docs/user_manual/image/06_Create_Config.png[Create Config]
 
 ===== *Update Customer Flow*
 
