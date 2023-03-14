@@ -12,13 +12,13 @@ NOTE: If you would like to test out the enosix Connector in a trial environment 
 
 == *Operations*
 
-The enosix Connector supports two operations:
+The enosix connector supports six operations:
 
 * *Check Connection*: This operation is helpful to run the health check in non-development environments.
-* *Search*: This operation is used to retrieve a paginated list of RIO objects matching the search criteria in enosix SAP framework.
+* *Search*: This operation is used to retrieve a paginated list of RIO (Rapid Integration Object)  documents matching the search criteria in enosix SAP framework.
 * *Get*: This operation is used to retrieve detailed RIO information from enosix SAP framework for a given RIO type and key.
 * *Create*: This operation is used to create detailed RIO in enosix SAP framework for a given RIO type.
-* *Update*: This operation is used to update the RIO based on the RIO type and key provide in enosix SAP framework.
+* *Update*: This operation is used to, update the RIO based on the RIO type and key provide in enosix SAP framework.
 * *Command*: This operation is used to run set of commands supported by enosix SAP framework on RIO's.
 
 image::/docs/user_manual/image/00_operations.png[Operations]
@@ -179,28 +179,28 @@ image::/docs/user_manual/image/04_search_order_operation_configuration.png[Order
 
 ===== *Get PO Flow*
 
- Get the detaled PO information from SAP based on the PO number provided as input key for any intrested internal / external application.
+ Get the detaled PO information from SAP based on the PO number provided as input key for any intrested internal / external integration application.
 
-image::/docs/user_manual/image/05_Get_Configuration.png[Get PO Flow]
-image::/docs/user_manual/image/05_Get_PO_Flow.png[Get PO Config]
+image::/docs/user_manual/image/05_Get_PO_Flow.png[Get PO Flow]
+image::/docs/user_manual/image/05_Get_Configuration.png[Get PO Config]
 
 ===== *Create Sales Document Flow*
 
- create a new sleas document in SAP from external / internal applications.
+ create a new sleas document in SAP from external / internal integratied application.
 
 image::/docs/user_manual/image/06_Create_Config.png[Create SalesDoc Flow]
 image::/docs/user_manual/image/06_Create_SalesDoc.png[Create Config]
 
 ===== *Update Customer Flow*
 
- Update the customer information from internal / external applications to SAP.
+ Update the customer information from integrated internal / external application to SAP.
 
 image::/docs/user_manual/image/07_Update_Customer.png[Update Customer Flow]
 image::/docs/user_manual/image/07_Update_Config.png[Update Config]
 
 ===== *Command Simulate Flow*
 
- Simulate the sales document from SAP (Not created in SAP) and used it any external / internal applications
+ Simulate the sales document in SAP (Not created in SAP) and used it any integrated external / internal application.
 
 image::/docs/user_manual/image/08_Command_Simulate.png[Command Simulate Flow]
 image::/docs/user_manual/image/08_Command_Config.png[Command Config]
