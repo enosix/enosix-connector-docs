@@ -15,9 +15,9 @@ NOTE: If you would like to test out the enosix Connector in a trial environment 
 The enosix connector supports six operations:
 
 * *Check Connection*: This operation is helpful to run the health check in non-development environments.
-* *Search*: This operation is used to retrieve a paginated list of RIO (Rapid Integration Object)  documents matching the search criteria in enosix SAP framework.
-* *Get*: This operation is used to retrieve detailed RIO information from enosix SAP framework for a given RIO type and key.
-* *Create*: This operation is used to create detailed RIO in enosix SAP framework for a given RIO type.
+* *Search*: This operation is used to retrieve a paginated list of RIO (Rapid Integration Object) documents, matching the search criteria in enosix SAP framework.
+* *Get*: This operation is used to retrieve detailed RIO information from enosix SAP framework, for a given RIO type and key.
+* *Create*: This operation is used to create detailed RIO in enosix SAP framework, for a given RIO type.
 * *Update*: This operation is used to, update the RIO based on the RIO type and key provide in enosix SAP framework.
 * *Command*: This operation is used to run set of commands supported by enosix SAP framework on RIO's.
 
