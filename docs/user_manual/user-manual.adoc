@@ -15,7 +15,11 @@ NOTE: If you would like to test out the enosix Connector in a trial environment 
 The enosix Connector supports two operations:
 
 * *Check Connection*: This operation is helpful to run the health check in non-development environments.
-* *Search*: This operation is used to retrieve a paginated list of objects matching the provided search criteria in SAP and enable batch synchronization.
+* *Search*: This operation is used to retrieve a paginated list of RIO objects matching the search criteria in enosix SAP framework.
+* *Get*: This operation is used to retrieve detailed RIO information from enosix SAP framework for a given RIO type and key.
+* *Create*: This operation is used to create detailed RIO in enosix SAP framework for a given RIO type.
+* *Update*: This operation is used to update the RIO based on the RIO type and key provide in enosix SAP framework.
+* *Command*: This operation is used to run set of commands supported by enosix SAP framework on RIO's.
 
 image::/docs/user_manual/image/00_operations.png[Operations]
 
@@ -52,16 +56,16 @@ Check the `pom.xml` file and make sure you have the dependency:
 [source, xml]
 ----
 <dependency>
-    <groupId>com.mulesoft.connectors</groupId>
-    <artifactId>enosix-connector-v1</artificatId>
-    <version>1.0.0</version>
-    <classifier>mule-plugin</classifier>
+  <groupId>com.enosix.mule</groupId>
+  <artifactId>enosix-connector</artifactId>
+  <version>2.0.0</version>
+  <classifier>mule-plugin</classifier>
 </dependency>
 ----
 
 == *Configuration*
 
-* After adding the enosix Connector dependency to your Mule project, click on the *Global Elements* tab at the base of the canvas.
+* After adding the enosix Connector dependency to your mule project, click on the *Global Elements* tab at the base of the canvas.
 * In the Global Mule Configuration Elements screen, click *Create*.
 * In the filter window, search for *enosix* and select the *Enosix Config* from the connector.
 
@@ -131,7 +135,7 @@ Use the *Test Connection* button to confirm the provided values are valid and a 
 
 ==== *Connector Namespace and Schema*
 
-When designing your application in Anypoint Studio, dragging operations provided by the enosix Connector onto the Anypoint Studio canvas will automatically pupulate the flow XML code with the connector *namespace* and *schema location*.
+When designing your application in Anypoint Studio, dragging operations provided by the enosix Connector onto the Anypoint Studio canvas will automatically populate the flow XML code with the connector *namespace* and *schema location*.
 
 To add this manually, the Namespace and Schema Location values are:
 |===
@@ -162,13 +166,43 @@ http://www.mulesoft.org/schema/mule/enosix http://www.mulesoft.org/schema/mule/e
 
 == *Common use cases*
 
-===== *Connectivity Check API*
+===== *Connectivity Check Flow*
   For validating the API has a successful connection to the enosix SAP Framework
 
-image::/docs/user_manual/image/02_check_connectivity.png[Check Connectivity API]
+image::/docs/user_manual/image/02_check_connectivity.png[Check Connectivity Flow]
 
-===== *Order Search API*
+===== *Order Search Flow*
   Searching for sales documents, passing search criteria in from the payload of the API
 
-image::/docs/user_manual/image/03_search_orders.png[Order Search API]
+image::/docs/user_manual/image/03_search_orders.png[Order Search Flow]
 image::/docs/user_manual/image/04_search_order_operation_configuration.png[Order Search Operation Config]
+
+===== *Get PO Flow*
+
+ Get the detaled PO information from SAP based on the PO number provided as input key for any intrested internal / external application.
+
+image::/docs/user_manual/image/05_Get_Configuration.png[Get PO Flow]
+image::/docs/user_manual/image/05_Get_PO_Flow.png[Get PO Config]
+
+===== *Create Sales Document Flow*
+
+ create a new sleas document in SAP from external / internal applications.
+
+image::/docs/user_manual/image/06_Create_Config.png[Create SalesDoc Flow]
+image::/docs/user_manual/image/06_Create_SalesDoc.png[Create Config]
+
+===== *Update Customer Flow*
+
+ Update the customer information from internal / external applications to SAP.
+
+image::/docs/user_manual/image/07_Update_Customer.png[Update Customer Flow]
+image::/docs/user_manual/image/07_Update_Config.png[Update Config]
+
+===== *Command Simulate Flow*
+
+ Simulate the sales document from SAP (Not created in SAP) and used it any external / internal applications
+
+image::/docs/user_manual/image/08_Command_Simulate.png[Command Simulate Flow]
+image::/docs/user_manual/image/08_Command_Config.png[Command Config]
+
+
