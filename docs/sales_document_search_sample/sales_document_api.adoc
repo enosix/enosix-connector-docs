@@ -76,7 +76,7 @@ c. Enter Page size as `attributes.queryParams.pageSize`.
 d. Enter Page number as `attributes.queryParams.pageNumber`.
 e. Enter the following dataweave code into the Search input field. This dataweave code is creating XML input format required for connector.
 +
-.Search Input
+.Search Payload
 [source,dataweave]
 ----
 %dw 2.0
@@ -119,9 +119,6 @@ image::/docs/sales_document_search_sample/image/10_search_conf_complete.png[Sear
 %dw 2.0
 output application/json skipNullOn="everywhere"
 fun convert(strBoolean)  = if(strBoolean)  'X'  else ''
-
-%dw 2.0
-output application/json skipNullOn="everywhere"
 ---
  {
      "PageInfo": {
