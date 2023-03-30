@@ -1,193 +1,631 @@
-= *Sales document search API implementation using enosix SAP Connector for Mule 4*
 
-*Note* : Instructions cover for both RAML and OAS specification, please use the type of API specification you are interested in.
 
-== *Pre-requisites to follow along this tutorial*
+= enosix Module Connector Reference
 
-* Anypoint Studio installed and in working condition.
-* enosix SAP connector for Mule 4 trial account or valid license.
-* Download the sales document https://github.com/enosix/enosix-sales-document-api/blob/main/Sales_Document_Search-1.0.1-raml.zip[RAML] or
-https://github.com/enosix/enosix-sales-document-api/blob/main/OAS/SalesDocument_OAS.json[OAS]  specification.
 
-== *Steps to create mule sales document search API*
+This is the main class of an extension, is the entry point from which configurations, connection providers, operations and sources are going to be declared.
 
-1. Open Anypoint studio and create new Mule project as below screenshot.
-+
-image::/docs/sales_document_search_sample/image/01_new_project.png[New project]
 
-2. Make sure *Scaffold flows from these API specifications* check mark selected. You can use the RAML or OAS from local file system or import a published API option(from exchange), depends on if you have RAML or OAS locally, or directly refer from exchange as maven dependency.
 
-3. If you selected local file system choose the RAML *Sales_Document_Search-1.0.1-raml.zip* or OAS *SalesDocument_OAS* location and click the *Finish* button. Skip step 4 & 5 go to 6.
-
-4. Make sure you have downloaded RAML zip file or OAS json, uploaded to your exchange. Choose import a published API, click green + (*Add new dependency*) button, you will be prompted to enter exchange credentials. Search for *Sales Document*, you will find *Sales Document Search* RAML or *SalesDocument_OAS* OAS file, here is the screenshot for RAML.
-+
-image::/docs/sales_document_search_sample/image/02_select_raml.png[Select RAML]
-
-5. Select the *Sales Document Search* RAML file or *SalesDocument_OAS* OAS and click **Add>** and *Finish* button.
-+
-image::/docs/sales_document_search_sample/image/03_finish_project_creation.png[Finish project creation]
-6. Now the base project with scaffold flow is created with main apikit router, apikit console and end point implementation skeleton private flow.
-+
-image::/docs/sales_document_search_sample/image/04_scaffold_flow.png[Scaffold flow]
-7. Now add enosix SAP connector for Mule 4 dependency to project. Click the search in exchange in *Mule Palette*, if you are not already logged in, login to exchange and search for enosix. You will find *enosix SAP Connector - Mule 4*.
-+
-image::/docs/sales_document_search_sample/image/05_connector_search.png[Connector search]
-8. Click *Add>* and *Finish* button, enosix connector dependency is added to your project. Make sure you have below dependency in pom.xml.
-+
-.pom.xml
-[source,XML]
-----
-<!--Dependency for enosix SAP Connector -Mule 4 -->
-<dependency>
-    <groupId>com.enosix.mule</groupId>
-	<artifactId>enosix-connector</artifactId>
-	<version>1.0.0</version>
-	<classifier>mule-plugin</classifier>
-</dependency>
-----
-+
-9. Drag and drop search operation from mule palette enosix connector into endpoint implementation private flow.
-+
-image::/docs/sales_document_search_sample/image/06_search_operation.png[Search operation]
-10. Configure search operation, create a global configuration for connector by selecting green **+** in search operation configuration.
-+
-image::/docs/sales_document_search_sample/image/07_search_config.png[Search config]
-
-a. URL: `https://trial.enosix.io/trialecc`
-b. Username: enter the user name for enosix SAP framework you received in your trial signup email.
-c. Password: enter the password for enosix SAP framework you received in your trial signup email.
-d. XSD Path: create a new folder *xsd* under src/main/resource and give the path here.
-e. Client: enter the SAP instance client number.
-f. Go to TLS tab, select *Edit inline* and select Insecure option.
-g. Click *Test connection* operation, once connection tested successful, click *OK* button.
-h. Global configuration completed.
-+
-Security reason original url, username and password taken out from screenshot, to get an idea here is the screenshot with dummy values.
-+
-image::/docs/sales_document_search_sample/image/08_global_config.png[Gloabl config]
-
-11. Enosix_Config has been configured with valid values, fill out the remaining config parameters for the General section for the Search operation.
-+
-image::/docs/sales_document_search_sample/image/09_enosix_config.png[Enosix config]
-a. Select Type *SFCISalesDocument* from drop down list.
-b. Click the *fx* icon for Page size, Page number and Search Input as we are entering the expression for these three parameters.
-
-c. Enter Page size as `attributes.queryParams.pageSize`.
-d. Enter Page number as `attributes.queryParams.pageNumber`.
-e. Enter the following dataweave code into the Search input field. This dataweave code is creating XML input format required for connector.
-+
-.Search Payload
-[source,dataweave]
-----
-%dw 2.0
-output application/xml skipNullOn="everywhere"
-fun convert(strBoolean)  = if(strBoolean)  'X'  else ''
+== Configurations
 ---
-SFCISalesDocument_SC: {
-	SEARCHPARAMS @(CompletedOnly: convert(attributes.queryParams.completedOnly as Boolean default false),
-    CustomerPONumber: attributes.queryParams.customerPONumber,
-    FromCreateDate: attributes.queryParams.fromCreateDate,
-    FromSalesDocumentNumber: attributes.queryParams.fromSalesDocumentNumber,
-    Leading: attributes.queryParams.leading,
-    Material: attributes.queryParams.material,
-    OpenOnly: convert(attributes.queryParams.openOnly as Boolean default false),
-    SalesDocumentVersionNumber: attributes.queryParams.salesDocumentVersionNumber,
-    ShipToParty: attributes.queryParams.shipToParty,
-    ShipToPurchaseOrderNumber: attributes.queryParams.shipToPurchaseOrderNumber,
-    SoldToParty: attributes.queryParams.soldToParty,
-    ToCreateDate: attributes.queryParams.toCreateDate,
-    ToSalesDocumentNumber: attributes.queryParams.toSalesDocumentNumber,
-    TransactionGroup: attributes.queryParams.transactionGroup,
-    Username: attributes.queryParams.username,
-    X_BillingBlock: convert(attributes.queryParams.billingBlock as Boolean default false),
-    X_CreditBlock: convert(attributes.queryParams.creditBlock as Boolean default false),
-    X_DeliveryBlock: convert(attributes.queryParams.deliveryBlock as Boolean default false),
-    YourReference: attributes.queryParams.yourReference,
-    tablerowstate: 'inserted' ) : null
-}
-----
-+
-12. Search operation configuration completed, your configuration should look like below screenshot.
-+
-image::/docs/sales_document_search_sample/image/10_search_conf_complete.png[Search config complete]
+[[Config]]
+=== Config
 
-13. Work on the transformation step to convert search operation xml to json. Click on the Transform message dataweave component, remove the sample json document out there. Copy and paste below dataweave code into transformation.
-+
-.Transform connector output xml to json using dataweave
-[source,dataweave]
-----
-%dw 2.0
-output application/json skipNullOn="everywhere"
-fun convert(strBoolean)  = if(strBoolean)  'X'  else ''
----
- {
-     "PageInfo": {
-		"PageSize": attributes.pagingInfo.pageSize,
-		"PageNumber":attributes.pagingInfo.pageNumber,
-		 "TotalRecords":attributes.pagingInfo.totalRecords
-	},
-  "SalesDocuments": [
-  	payload.SFCISalesDocument_SR.*SEARCHRESULT map {
-      "SalesDocument": $.@SalesDocument,
-      "CustomerPONumber": $.@CustomerPONumber,
-      "CreateDate": $.@CreateDate,
-      "SalesDocumentType": $.@SalesDocumentType,
-      "SalesDocumentTypeDescription": $.@SalesDocumentTypeDescription,
-      "SoldToParty": $.@SoldToParty,
-      "SoldToName": $.@SoldToName,
-      "SoldToCity": $.@SoldToCity,
-      "SoldToRegion": $.@SoldToRegion,
-      "SoldToRegionDescription": $.@SoldToRegionDescription,
-      "SoldToCountry": $.@SoldToCountry,
-      "SoldToCountryDescription": $.@SoldToCountryDescription,
-      "ShipToParty": $.@ShipToParty,
-      "ShipToName": $.@ShipToName,
-      "ShipToCity": $.@ShipToCity,
-      "ShipToRegion": $.@ShipToRegion,
-      "ShipToRegionDescription": $.@ShipToRegionDescription,
-      "ShipToCountry": $.@ShipToCountry,
-      "ShipToCountryDescription": $.@ShipToCountryDescription,
-      "NetValueInDocumentCurrency": $.@NetValueInDocumentCurrency,
-      "TaxAmountInDocumentCurrency": $.@TaxAmountInDocumentCurrency,
-      "SDDocumentCurrency": $.@SDDocumentCurrency,
-      "OrderStatus": $.@OrderStatus,
-      "SalesDocumentVersionNumber": $.@SalesDocumentVersionNumber,
-      "YourReference": $.@YourReference,
-      "ShipToPurchaseOrderNumber": $.@ShipToPurchaseOrderNumber,
-      "TransactionGroup": $.@TransactionGroup,
-      "DeliveryBlock": $.@DeliveryBlock,
-      "DeliveryBlockDescription": $.@DeliveryBlockDescription,
-      "BillingBlock": $.@BillingBlock,
-      "BillingBlockDescription": $.@BillingBlockDescription,
-      "CreditBlock": $.@CreditBlock,
-      "CreditBlockDescription": $.@CreditBlockDescription,
-      "DeliveryStatus": $.@DeliveryStatus,
-      "DeliveryStatusDescription": $.@DeliveryStatusDescription,
-      "TotalQuantity": $.@TotalQuantity,
-      "GoodsIssuedQuantity": $.@GoodsIssuedQuantity,
-      "LastChangedDate": $.@LastChangedDate,
-      "StartDate": $.@StartDate,
-      "EndDate": $.@EndDate,
-      "CUSTOM01": $.@CUSTOM01,
-      "CUSTOM02": $.@CUSTOM02,
-      "CUSTOM03": $.@CUSTOM03,
-      "CUSTOM04": $.@CUSTOM04,
-      "CUSTOM05": $.@CUSTOM05,
-      "CUSTOM06": $.@CUSTOM06,
-      "CUSTOM07": $.@CUSTOM07,
-      "CUSTOM08": $.@CUSTOM08,
-      "CUSTOM09": $.@CUSTOM09,
-      "CUSTOM10": $.@CUSTOM10
-    }
-  ]
-}
-----
-+
-14. Now the code is completed for API implementation, run the project . Make sure flow started without any errors by checking the console logs.
-15. Send a request from postman / browser in this format  http://localhost:8081/api/search/salesdocument?soldToParty=2200&pageSize=100&pageNumber=1
+
+Default configuration
+
+
+==== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+|Name | String | The name for this configuration. Connectors reference the configuration with this name. | | *x*{nbsp}
+| Connection a| <<Config_Connection, Connection>>
+ | The connection types that can be provided to this configuration. | | *x*{nbsp}
+| Language a| String |  The default language for requests. This can be overridden during the operation. |  en | {nbsp}
+| SessionClose a| Boolean |  Whether to leave the session open or not. This can be overridden during the operation. |  true | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  The unit of time to wait for response time out from the enosix framework. This can be overridden during the operation. |  SECONDS | {nbsp}
+| Response Timeout a| Number |  The amount of time to wait for response timeout from the enosix framework. This can be overridden during the operation. |  30 | {nbsp}
+| Name a| String |  The identifier of this element used to reference it in other components |  | *x*{nbsp}
+| Expiration Policy a| <<ExpirationPolicy>> |  Configures the minimum amount of time that a dynamic configuration instance can remain idle before the runtime considers it eligible for expiration. This does not mean that the platform will expire the instance at the exact moment that it becomes eligible. The runtime will actually purge the instances when it sees it fit. |  | {nbsp}
+|===
+
+==== Connection Types
+[[Config_Connection]]
+===== Connection
+
+
+====== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| URL a| String |  |  | *x*{nbsp}
+| Username a| String |  |  | *x*{nbsp}
+| Password a| String |  |  | *x*{nbsp}
+| XSD Path a| String |  This should be enosix_xsd under mule project resource directory |  | *x*{nbsp}
+| Client a| Number |  |  800 | {nbsp}
+| Proxy Config a| <<Proxy>> |  Reusable configuration element for outbound connections through a proxy |  | {nbsp}
+| TLS Configuration a| <<Tls>> |  |  | {nbsp}
+| Reconnection a| <<Reconnection>> |  When the application is deployed, a connectivity test is performed on all connectors. If set to true, deployment will fail if the test doesn't pass after exhausting the associated reconnection strategy |  | {nbsp}
+|===
+
+==== Associated Operations
+* <<Command>> {nbsp}
+* <<Create>> {nbsp}
+* <<Get>> {nbsp}
+* <<Login>> {nbsp}
+* <<Search>> {nbsp}
+* <<Update>> {nbsp}
 
 
 
-Complete source code for this API is available here https://github.com/enosix/enosix-sales-document-api[enosix-sales-document-api] you can download and run in Anypoint studio.
+== Operations
 
-Make sure you update the properties file with correct information https://github.com/enosix/enosix-sales-document-api/blob/main/src/main/resources/env.properties[env.properties]
+[[Command]]
+== Command
+`<enosix:command>`
+
+
+Command operation is used to run the set of commands supported by enosix SAP framework on Rapid Integration Objects.
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Type a| String |  The business object name |  | *x*{nbsp}
+| Command a| String |  Command for the business object |  | *x*{nbsp}
+| Key a| String |  The ID of the object |  $*$ | {nbsp}
+| Payload a| Binary |  Input payload for the command operation |  #[payload] | {nbsp}
+| Language a| String |  The language that should be used in the enosix framework |  | {nbsp}
+| Session Close a| Boolean |  Whether to leave the SAP session open or not |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  The units of time to wait for a reply from the enosix framework |  | {nbsp}
+| Response Timeout a| Number |  The amount of time to wait for a reply from the enosix framework |  | {nbsp}
+| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| Binary
+| *Attributes Type* a| <<EnosixAttributes>>
+|===
+
+=== For Configurations
+
+* <<Config>> {nbsp}
+
+=== Throws
+
+* ENOSIX:CONNECTIVITY {nbsp}
+* ENOSIX:INTERRUPTED_ERROR {nbsp}
+* ENOSIX:PARSER_ERROR {nbsp}
+* ENOSIX:RESPONSE_TIMEOUT {nbsp}
+* ENOSIX:RETRY_EXHAUSTED {nbsp}
+* ENOSIX:XSD_NOT_FOUND {nbsp}
+
+
+[[Create]]
+== Create
+`<enosix:create>`
+
+
+Create operation is used to create detailed Rapid Integration Object using enosix SAP framework.
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Type a| String |  The business object name |  | *x*{nbsp}
+| Payload a| Binary |  Input payload |  #[payload] | {nbsp}
+| Return Complete Document a| Boolean |  Return complete Document or not |  true | {nbsp}
+| Language a| String |  The language that should be used in the enosix framework |  | {nbsp}
+| Session Close a| Boolean |  Whether to leave the SAP session open or not |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  The units of time to wait for a reply from the enosix framework |  | {nbsp}
+| Response Timeout a| Number |  The amount of time to wait for a reply from the enosix framework |  | {nbsp}
+| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| Binary
+| *Attributes Type* a| <<EnosixAttributes>>
+|===
+
+=== For Configurations
+
+* <<Config>> {nbsp}
+
+=== Throws
+
+* ENOSIX:CONNECTIVITY {nbsp}
+* ENOSIX:INTERRUPTED_ERROR {nbsp}
+* ENOSIX:PARSER_ERROR {nbsp}
+* ENOSIX:RESPONSE_TIMEOUT {nbsp}
+* ENOSIX:RETRY_EXHAUSTED {nbsp}
+* ENOSIX:XSD_NOT_FOUND {nbsp}
+
+
+[[Get]]
+== Get
+`<enosix:get>`
+
+
+Get operation is used to get detailed Rapid Integration Object using enosix SAP framework.
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Type a| String |  The business object name |  | *x*{nbsp}
+| Key a| String |  The ID of the object |  | *x*{nbsp}
+| Language a| String |  The language that should be used in the enosix framework |  | {nbsp}
+| Session Close a| Boolean |  Whether to leave the SAP session open or not |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  The units of time to wait for a reply from the enosix framework |  | {nbsp}
+| Response Timeout a| Number |  The amount of time to wait for a reply from the enosix framework |  | {nbsp}
+| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| Binary
+| *Attributes Type* a| <<EnosixAttributes>>
+|===
+
+=== For Configurations
+
+* <<Config>> {nbsp}
+
+=== Throws
+
+* ENOSIX:CONNECTIVITY {nbsp}
+* ENOSIX:INTERRUPTED_ERROR {nbsp}
+* ENOSIX:PARSER_ERROR {nbsp}
+* ENOSIX:RESPONSE_TIMEOUT {nbsp}
+* ENOSIX:RETRY_EXHAUSTED {nbsp}
+* ENOSIX:XSD_NOT_FOUND {nbsp}
+
+
+[[Login]]
+== Check Connection
+`<enosix:login>`
+
+
+Login operation is used to check the connection health check for SAP via the enosix framework
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| <<#root:messages>>
+| *Attributes Type* a| <<EnosixAttributes>>
+|===
+
+=== For Configurations
+
+* <<Config>> {nbsp}
+
+=== Throws
+
+* ENOSIX:CONNECTIVITY {nbsp}
+* ENOSIX:INTERRUPTED_ERROR {nbsp}
+* ENOSIX:PARSER_ERROR {nbsp}
+* ENOSIX:RESPONSE_TIMEOUT {nbsp}
+* ENOSIX:RETRY_EXHAUSTED {nbsp}
+* ENOSIX:XSD_NOT_FOUND {nbsp}
+
+
+[[Search]]
+== Search
+`<enosix:search>`
+
+
+Search operation is used to find the list of Rapid Integration Object documents from enosix SAP framework
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Type a| String |  The business object name |  | *x*{nbsp}
+| Page Size a| Number |  Page Size |  | {nbsp}
+| Page Number a| Number |  Page Number |  | {nbsp}
+| Payload a| Binary |  Payload for search operation |  #[payload] | {nbsp}
+| Language a| String |  The language that should be used in the enosix framework |  | {nbsp}
+| Session Close a| Boolean |  Whether to leave the SAP session open or not |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  The units of time to wait for a reply from the enosix framework |  | {nbsp}
+| Response Timeout a| Number |  The amount of time to wait for a reply from the enosix framework |  | {nbsp}
+| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| Binary
+| *Attributes Type* a| <<EnosixAttributes>>
+|===
+
+=== For Configurations
+
+* <<Config>> {nbsp}
+
+=== Throws
+
+* ENOSIX:CONNECTIVITY {nbsp}
+* ENOSIX:INTERRUPTED_ERROR {nbsp}
+* ENOSIX:PARSER_ERROR {nbsp}
+* ENOSIX:RESPONSE_TIMEOUT {nbsp}
+* ENOSIX:RETRY_EXHAUSTED {nbsp}
+* ENOSIX:XSD_NOT_FOUND {nbsp}
+
+
+[[Update]]
+== Update
+`<enosix:update>`
+
+
+Update operation is used to update detailed Rapid Integration Object using enisox SAP framework.
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Type a| String |  The business object name |  | *x*{nbsp}
+| Payload a| Binary |  Input payload |  #[payload] | {nbsp}
+| Return Complete Document a| Boolean |  Return complete Document or not |  true | {nbsp}
+| Key a| String |  The ID of the object |  | *x*{nbsp}
+| Language a| String |  The language that should be used in the enosix framework |  | {nbsp}
+| Session Close a| Boolean |  Whether to leave the SAP session open or not |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  The units of time to wait for a reply from the enosix framework |  | {nbsp}
+| Response Timeout a| Number |  The amount of time to wait for a reply from the enosix framework |  | {nbsp}
+| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| Binary
+| *Attributes Type* a| <<EnosixAttributes>>
+|===
+
+=== For Configurations
+
+* <<Config>> {nbsp}
+
+=== Throws
+
+* ENOSIX:CONNECTIVITY {nbsp}
+* ENOSIX:INTERRUPTED_ERROR {nbsp}
+* ENOSIX:PARSER_ERROR {nbsp}
+* ENOSIX:RESPONSE_TIMEOUT {nbsp}
+* ENOSIX:RETRY_EXHAUSTED {nbsp}
+* ENOSIX:XSD_NOT_FOUND {nbsp}
+
+
+
+== Types
+[[Proxy]]
+=== Proxy
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Host a| String | Host where the proxy requests will be sent. |  | x
+| Port a| Number | Port where the proxy requests will be sent. |  | x
+| Username a| String | The username to authenticate against the proxy. |  | 
+| Password a| String | The password to authenticate against the proxy. |  | 
+| Non Proxy Hosts a| String | A list of comma separated hosts against which the proxy should not be used |  | 
+|======================
+
+[[Tls]]
+=== Tls
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Enabled Protocols a| String | A comma separated list of protocols enabled for this context. |  | 
+| Enabled Cipher Suites a| String | A comma separated list of cipher suites enabled for this context. |  | 
+| Trust Store a| <<TrustStore>> |  |  | 
+| Key Store a| <<KeyStore>> |  |  | 
+| Revocation Check a| * <<StandardRevocationCheck>>
+* <<CustomOcspResponder>>
+* <<CrlFile>> |  |  | 
+|======================
+
+[[TrustStore]]
+=== Trust Store
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Path a| String | The location (which will be resolved relative to the current classpath and file system, if possible) of the trust store. |  | 
+| Password a| String | The password used to protect the trust store. |  | 
+| Type a| String | The type of store used. |  | 
+| Algorithm a| String | The algorithm used by the trust store. |  | 
+| Insecure a| Boolean | If true, no certificate validations will be performed, rendering connections vulnerable to attacks. Use at your own risk. |  | 
+|======================
+
+[[KeyStore]]
+=== Key Store
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Path a| String | The location (which will be resolved relative to the current classpath and file system, if possible) of the key store. |  | 
+| Type a| String | The type of store used. |  | 
+| Alias a| String | When the key store contains many private keys, this attribute indicates the alias of the key that should be used. If not defined, the first key in the file will be used by default. |  | 
+| Key Password a| String | The password used to protect the private key. |  | 
+| Password a| String | The password used to protect the key store. |  | 
+| Algorithm a| String | The algorithm used by the key store. |  | 
+|======================
+
+[[StandardRevocationCheck]]
+=== Standard Revocation Check
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Only End Entities a| Boolean | Only verify the last element of the certificate chain. |  | 
+| Prefer Crls a| Boolean | Try CRL instead of OCSP first. |  | 
+| No Fallback a| Boolean | Do not use the secondary checking method (the one not selected before). |  | 
+| Soft Fail a| Boolean | Avoid verification failure when the revocation server can not be reached or is busy. |  | 
+|======================
+
+[[CustomOcspResponder]]
+=== Custom Ocsp Responder
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Url a| String | The URL of the OCSP responder. |  | 
+| Cert Alias a| String | Alias of the signing certificate for the OCSP response (must be in the trust store), if present. |  | 
+|======================
+
+[[CrlFile]]
+=== Crl File
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Path a| String | The path to the CRL file. |  | 
+|======================
+
+[[Reconnection]]
+=== Reconnection
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Fails Deployment a| Boolean | When the application is deployed, a connectivity test is performed on all connectors. If set to true, deployment will fail if the test doesn't pass after exhausting the associated reconnection strategy |  | 
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> | The reconnection strategy to use |  | 
+|======================
+
+[[Reconnect]]
+=== Reconnect
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Frequency a| Number | How often (in ms) to reconnect |  | 
+| Blocking a| Boolean | If false, the reconnection strategy will run in a separate, non-blocking thread |  | 
+| Count a| Number | How many reconnection attempts to make |  | 
+|======================
+
+[[ReconnectForever]]
+=== Reconnect Forever
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Frequency a| Number | How often (in ms) to reconnect |  | 
+| Blocking a| Boolean | If false, the reconnection strategy will run in a separate, non-blocking thread |  | 
+|======================
+
+[[ExpirationPolicy]]
+=== Expiration Policy
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Max Idle Time a| Number | A scalar time value for the maximum amount of time a dynamic configuration instance should be allowed to be idle before it's considered eligible for expiration |  | 
+| Time Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS | A time unit that qualifies the maxIdleTime attribute |  | 
+|======================
+
+[[EnosixAttributes]]
+=== Enosix Attributes
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Edit Mode a| String |  |  | 
+| Key a| String |  |  | 
+| Messages a| Array of String |  |  | 
+| Paging Info a| Object |  |  | 
+| Success a| Boolean |  |  | 
+|======================
+
+[[RepeatableInMemoryStream]]
+=== Repeatable In Memory Stream
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Initial Buffer Size a| Number | This is the amount of memory that will be allocated in order to consume the stream and provide random access to it. If the stream contains more data than can be fit into this buffer, then it will be expanded by according to the bufferSizeIncrement attribute, with an upper limit of maxInMemorySize. |  | 
+| Buffer Size Increment a| Number | This is by how much will be buffer size by expanded if it exceeds its initial size. Setting a value of zero or lower will mean that the buffer should not expand, meaning that a STREAM_MAXIMUM_SIZE_EXCEEDED error will be raised when the buffer gets full. |  | 
+| Max Buffer Size a| Number | This is the maximum amount of memory that will be used. If more than that is used then a STREAM_MAXIMUM_SIZE_EXCEEDED error will be raised. A value lower or equal to zero means no limit. |  | 
+| Buffer Unit a| Enumeration, one of:
+
+** BYTE
+** KB
+** MB
+** GB | The unit in which all these attributes are expressed |  | 
+|======================
+
+[[RepeatableFileStoreStream]]
+=== Repeatable File Store Stream
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| In Memory Size a| Number | Defines the maximum memory that the stream should use to keep data in memory. If more than that is consumed then it will start to buffer the content on disk. |  | 
+| Buffer Unit a| Enumeration, one of:
+
+** BYTE
+** KB
+** MB
+** GB | The unit in which maxInMemorySize is expressed |  | 
+|======================
+
+[[#root:messages]]
+=== #root:messages
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Messages a| <<MessagesType>> |  |  | x
+|======================
+
+[[MessagesType]]
+=== Messages Type
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Message a| Enumeration, one of:
+
+** messages1
+** messages2 |  |  | 
+|======================
+
