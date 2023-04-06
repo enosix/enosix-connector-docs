@@ -8,14 +8,21 @@ This connector facilitates the integration with SAP without using SAP JCO librar
 
 Read through this user guide to understand how to configure a basic flow using the connector. Track feature additions, compatibility, limitations, and API version updates with each release of the connector using the https://releases.enosix.io/?tag=MuleSoft%20Connector[Connector Release Notes]. Review the connector operations and functionality using the demo application.
 
+
 NOTE: If you would like to test out the enosix Connector in a trial environment please fill out this https://go.enosix.com/l/957862/2023-01-30/cw38r[Trial Form,role=external,window=_blank]
+
+NOTE: If you'd like an overview, you can watch the https://enosix.wistia.com/medias/7dwi2evo5q[enosix SAP Connector Video Walkthrough]
 
 == *Operations*
 
-The enosix Connector supports two operations:
+The enosix connector supports six operations:
 
 * *Check Connection*: This operation is helpful to run the health check in non-development environments.
-* *Search*: This operation is used to retrieve a paginated list of objects matching the provided search criteria in SAP and enable batch synchronization.
+* *Search*: This operation is used to retrieve a paginated list of RIO (Rapid Integration Object) documents, matching the search criteria in enosix SAP framework.
+* *Get*: This operation is used to retrieve detailed RIO information from enosix SAP framework, for a given RIO type and key.
+* *Create*: This operation is used to create detailed RIO in enosix SAP framework, for a given RIO type.
+* *Update*: This operation is used to update the RIO based on the RIO type and key provided in enosix SAP framework.
+* *Command*: This operation is used to run set of commands supported by enosix SAP framework on RIO's.
 
 image::/docs/user_manual/image/00_operations.png[Operations]
 
@@ -52,16 +59,16 @@ Check the `pom.xml` file and make sure you have the dependency:
 [source, xml]
 ----
 <dependency>
-    <groupId>com.mulesoft.connectors</groupId>
-    <artifactId>enosix-connector-v1</artificatId>
-    <version>1.0.0</version>
-    <classifier>mule-plugin</classifier>
+  <groupId>com.enosix.mule</groupId>
+  <artifactId>enosix-connector</artifactId>
+  <version>2.0.0</version>
+  <classifier>mule-plugin</classifier>
 </dependency>
 ----
 
 == *Configuration*
 
-* After adding the enosix Connector dependency to your Mule project, click on the *Global Elements* tab at the base of the canvas.
+* After adding the enosix Connector dependency to your mule project, click on the *Global Elements* tab at the base of the canvas.
 * In the Global Mule Configuration Elements screen, click *Create*.
 * In the filter window, search for *enosix* and select the *Enosix Config* from the connector.
 
@@ -70,14 +77,14 @@ Check the `pom.xml` file and make sure you have the dependency:
 |===
 |Field Name |Type |Value |Required
 
-|Url |String |Enter the SAP Url |X
+|URL |String |Enter the SAP Url |X
 |Username |String |Enter the SAP username |X
 |Password |String |Enter the SAP password |X
 |XSD Path |String |Create a folder under mule project {mule_project}/src/main/resource/{enosix_xsd} and select this path |X
 |Client |int |Enter the number for your SAP client |
 |Language |String |Enter a language to be passed on the https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/8b/46468c433b40c3b87b2e07f34dea1b/content.htm?no_cache=true[sap-language parameter] |
-|Session close |boolean |Enter whether to leave the session open or closed after each request. Defaults to true | X
-|Response Timeout Unit | java.util.concurrent.TimeUnit |Enter the unit of time to wait for a reply from the enosix SAP Framework, defaults to SECONDS |
+|Session Close |boolean |Enter whether to leave the session open or closed after each request. Defaults to True | X
+|Response Timeout Unit | java.util.concurrent.TimeUnit |Enter the unit of time to wait for a reply from the enosix SAP Framework. Defaults to SECONDS |
 |Response Timeout  |int |Enter the amount of time to wait for a reply from the enosix SAP Framework |
 
 |===
@@ -109,7 +116,7 @@ Example screenshot Proxy Edit Inline option
 image::/docs/user_manual/image/01_globalconfig_proxy.png[Proxy Config]
 
 
-*Tls tab*
+*TLS tab*
 
 TLS Configuration has three options
 |===
@@ -117,13 +124,13 @@ TLS Configuration has three options
 
 | None | No TLS configuration and default works for http based clients
 
-|Edit Inline  | This is Tls configuration from UI and provide the details or Choose Insecure check box for https calls without Tls.
+|Edit Inline  | This is TLS configuration from UI and provide the details or Choose Insecure check box for https calls without TLS.
 
-|Bean Reference | This supports mule stand spring bean definition for Tls.
+|Global Reference | This supports TLS configuration as a global config.
 
 |===
 
-Example screenshot of Tls EditInline option for https call with insecure option
+Example screenshot of TLS Edit Inline option for https call with Insecure option
 
 image::/docs/user_manual/image/01_globalconfig_tls.png[Tls Config]
 
@@ -131,7 +138,7 @@ Use the *Test Connection* button to confirm the provided values are valid and a 
 
 ==== *Connector Namespace and Schema*
 
-When designing your application in Anypoint Studio, dragging operations provided by the enosix Connector onto the Anypoint Studio canvas will automatically pupulate the flow XML code with the connector *namespace* and *schema location*.
+When designing your application in Anypoint Studio, dragging operations provided by the enosix Connector onto the Anypoint Studio canvas will automatically populate the flow XML code with the connector *namespace* and *schema location*.
 
 To add this manually, the Namespace and Schema Location values are:
 |===
@@ -162,13 +169,43 @@ http://www.mulesoft.org/schema/mule/enosix http://www.mulesoft.org/schema/mule/e
 
 == *Common use cases*
 
-===== *Connectivity Check API*
+===== *Connectivity Check Flow*
   For validating the API has a successful connection to the enosix SAP Framework
 
-image::/docs/user_manual/image/02_check_connectivity.png[Check Connectivity API]
+image::/docs/user_manual/image/02_check_connectivity.png[Check Connectivity Flow]
 
-===== *Order Search API*
+===== *Order Search Flow*
   Searching for sales documents, passing search criteria in from the payload of the API
 
-image::/docs/user_manual/image/03_search_orders.png[Order Search API]
+image::/docs/user_manual/image/03_search_orders.png[Order Search Flow]
 image::/docs/user_manual/image/04_search_order_operation_configuration.png[Order Search Operation Config]
+
+===== *Get PO Flow*
+
+ Get the detailed PO information from SAP based on the PO number provided as input key for any interested internal / external integration application.
+
+image::/docs/user_manual/image/05_Get_PO_Flow.png[Get PO Flow]
+image::/docs/user_manual/image/05_Get_Configuration.png[Get PO Config]
+
+===== *Create Sales Document Flow*
+
+ Create a new sales document in SAP from external / internal integrated application.
+
+image::/docs/user_manual/image/06_Create_SalesDoc.png[Create SalesDoc Flow]
+image::/docs/user_manual/image/06_Create_Config.png[Create Config]
+
+===== *Update Customer Flow*
+
+ Update the customer information from integrated internal / external application to SAP.
+
+image::/docs/user_manual/image/07_Update_Customer.png[Update Customer Flow]
+image::/docs/user_manual/image/07_Update_Config.png[Update Config]
+
+===== *Command Simulate Flow*
+
+ Simulate the sales document in SAP (Not created in SAP) and use it for any integrated external / internal application.
+
+image::/docs/user_manual/image/08_Command_Simulate.png[Command Simulate Flow]
+image::/docs/user_manual/image/08_Command_Config.png[Command Config]
+
+

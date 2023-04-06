@@ -26,6 +26,16 @@ Default configuration
  | The connection types that can be provided to this configuration. | | *x*{nbsp}
 | Language a| String |  The default language for requests. This can be overridden during the operation. |  en | {nbsp}
 | SessionClose a| Boolean |  Whether to leave the session open or not. This can be overridden during the operation. |  true | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  The unit of time to wait for response time out from the enosix framework. This can be overridden during the operation. |  SECONDS | {nbsp}
+| Response Timeout a| Number |  The amount of time to wait for response timeout from the enosix framework. This can be overridden during the operation. |  30 | {nbsp}
 | Name a| String |  The identifier of this element used to reference it in other components |  | *x*{nbsp}
 | Expiration Policy a| <<ExpirationPolicy>> |  Configures the minimum amount of time that a dynamic configuration instance can remain idle before the runtime considers it eligible for expiration. This does not mean that the platform will expire the instance at the exact moment that it becomes eligible. The runtime will actually purge the instances when it sees it fit. |  | {nbsp}
 |===
@@ -45,36 +55,29 @@ Default configuration
 | Password a| String |  |  | *x*{nbsp}
 | XSD Path a| String |  This should be enosix_xsd under mule project resource directory |  | *x*{nbsp}
 | Client a| Number |  |  800 | {nbsp}
-| Response Timeout Unit a| Enumeration, one of:
-
-** NANOSECONDS
-** MICROSECONDS
-** MILLISECONDS
-** SECONDS
-** MINUTES
-** HOURS
-** DAYS |  The unit of time to wait for response time out from the enosix framework. This can be overridden during the operation. |  SECONDS | {nbsp}
-| Response Timeout a| Number |  The amount of time to wait for response timeout from the enosix framework. This can be overridden during the operation. |  30 | {nbsp}
 | Proxy Config a| <<Proxy>> |  Reusable configuration element for outbound connections through a proxy |  | {nbsp}
 | TLS Configuration a| <<Tls>> |  |  | {nbsp}
 | Reconnection a| <<Reconnection>> |  When the application is deployed, a connectivity test is performed on all connectors. If set to true, deployment will fail if the test doesn't pass after exhausting the associated reconnection strategy |  | {nbsp}
-| Pooling Profile a| <<PoolingProfile>> |  Characteristics of the connection pool |  | {nbsp}
 |===
 
 ==== Associated Operations
+* <<Command>> {nbsp}
+* <<Create>> {nbsp}
+* <<Get>> {nbsp}
 * <<Login>> {nbsp}
 * <<Search>> {nbsp}
+* <<Update>> {nbsp}
 
 
 
 == Operations
 
-[[Login]]
-== Check Connection
-`<enosix:login>`
+[[Command]]
+== Command
+`<enosix:command>`
 
 
-Login operation for SAP via the enosix framework
+Command operation is used to run the set of commands supported by enosix SAP framework on Rapid Integration Objects.
 
 
 === Parameters
@@ -87,6 +90,22 @@ Login operation for SAP via the enosix framework
 | Streaming Strategy a| * <<RepeatableInMemoryStream>>
 * <<RepeatableFileStoreStream>>
 * non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Type a| String |  The business object name |  | *x*{nbsp}
+| Command a| String |  Command for the business object |  | *x*{nbsp}
+| Key a| String |  The ID of the object |  $*$ | {nbsp}
+| Payload a| Binary |  Input payload for the command operation |  #[payload] | {nbsp}
+| Language a| String |  The language that should be used in the enosix framework |  | {nbsp}
+| Session Close a| Boolean |  Whether to leave the SAP session open or not |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  The units of time to wait for a reply from the enosix framework |  | {nbsp}
+| Response Timeout a| Number |  The amount of time to wait for a reply from the enosix framework |  | {nbsp}
 | Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
 | Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
 | Reconnection Strategy a| * <<Reconnect>>
@@ -115,12 +134,12 @@ Login operation for SAP via the enosix framework
 * ENOSIX:XSD_NOT_FOUND {nbsp}
 
 
-[[Search]]
-== Search
-`<enosix:search>`
+[[Create]]
+== Create
+`<enosix:create>`
 
 
-Searches for an SAP object via the enosix framework
+Create operation is used to create detailed Rapid Integration Object using enosix SAP framework.
 
 
 === Parameters
@@ -129,12 +148,15 @@ Searches for an SAP object via the enosix framework
 |===
 | Name | Type | Description | Default Value | Required
 | Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
 | Type a| String |  The business object name |  | *x*{nbsp}
-| Page Size a| Number |  |  | {nbsp}
-| Page Number a| Number |  |  | {nbsp}
-| Search Input a| Any |  |  #[payload] | {nbsp}
-| Language a| String |  The language that should be used in the enosix framework |  en | {nbsp}
-| Session Close a| Boolean |  Whether to leave the SAP session open or not |  true | {nbsp}
+| Payload a| Binary |  Input payload |  #[payload] | {nbsp}
+| Return Complete Document a| Boolean |  Return complete Document or not |  true | {nbsp}
+| Language a| String |  The language that should be used in the enosix framework |  | {nbsp}
+| Session Close a| Boolean |  Whether to leave the SAP session open or not |  | {nbsp}
 | Response Timeout Unit a| Enumeration, one of:
 
 ** NANOSECONDS
@@ -143,12 +165,238 @@ Searches for an SAP object via the enosix framework
 ** SECONDS
 ** MINUTES
 ** HOURS
-** DAYS |  The units of time to wait for a reply from the enosix framework |  SECONDS | {nbsp}
-| Response Timeout a| Number |  The amount of time to wait for a reply from the enosix framework |  30 | {nbsp}
+** DAYS |  The units of time to wait for a reply from the enosix framework |  | {nbsp}
+| Response Timeout a| Number |  The amount of time to wait for a reply from the enosix framework |  | {nbsp}
+| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| Binary
+| *Attributes Type* a| <<EnosixAttributes>>
+|===
+
+=== For Configurations
+
+* <<Config>> {nbsp}
+
+=== Throws
+
+* ENOSIX:CONNECTIVITY {nbsp}
+* ENOSIX:INTERRUPTED_ERROR {nbsp}
+* ENOSIX:PARSER_ERROR {nbsp}
+* ENOSIX:RESPONSE_TIMEOUT {nbsp}
+* ENOSIX:RETRY_EXHAUSTED {nbsp}
+* ENOSIX:XSD_NOT_FOUND {nbsp}
+
+
+[[Get]]
+== Get
+`<enosix:get>`
+
+
+Get operation is used to get detailed Rapid Integration Object using enosix SAP framework.
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
 | Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
 | Streaming Strategy a| * <<RepeatableInMemoryStream>>
 * <<RepeatableFileStoreStream>>
 * non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Type a| String |  The business object name |  | *x*{nbsp}
+| Key a| String |  The ID of the object |  | *x*{nbsp}
+| Language a| String |  The language that should be used in the enosix framework |  | {nbsp}
+| Session Close a| Boolean |  Whether to leave the SAP session open or not |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  The units of time to wait for a reply from the enosix framework |  | {nbsp}
+| Response Timeout a| Number |  The amount of time to wait for a reply from the enosix framework |  | {nbsp}
+| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| Binary
+| *Attributes Type* a| <<EnosixAttributes>>
+|===
+
+=== For Configurations
+
+* <<Config>> {nbsp}
+
+=== Throws
+
+* ENOSIX:CONNECTIVITY {nbsp}
+* ENOSIX:INTERRUPTED_ERROR {nbsp}
+* ENOSIX:PARSER_ERROR {nbsp}
+* ENOSIX:RESPONSE_TIMEOUT {nbsp}
+* ENOSIX:RETRY_EXHAUSTED {nbsp}
+* ENOSIX:XSD_NOT_FOUND {nbsp}
+
+
+[[Login]]
+== Check Connection
+`<enosix:login>`
+
+
+Login operation is used to check the connection health check for SAP via the enosix framework
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| <<#root:messages>>
+| *Attributes Type* a| <<EnosixAttributes>>
+|===
+
+=== For Configurations
+
+* <<Config>> {nbsp}
+
+=== Throws
+
+* ENOSIX:CONNECTIVITY {nbsp}
+* ENOSIX:INTERRUPTED_ERROR {nbsp}
+* ENOSIX:PARSER_ERROR {nbsp}
+* ENOSIX:RESPONSE_TIMEOUT {nbsp}
+* ENOSIX:RETRY_EXHAUSTED {nbsp}
+* ENOSIX:XSD_NOT_FOUND {nbsp}
+
+
+[[Search]]
+== Search
+`<enosix:search>`
+
+
+Search operation is used to find the list of Rapid Integration Object documents from enosix SAP framework
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Type a| String |  The business object name |  | *x*{nbsp}
+| Page Size a| Number |  Page Size |  | {nbsp}
+| Page Number a| Number |  Page Number |  | {nbsp}
+| Payload a| Binary |  Payload for search operation |  #[payload] | {nbsp}
+| Language a| String |  The language that should be used in the enosix framework |  | {nbsp}
+| Session Close a| Boolean |  Whether to leave the SAP session open or not |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  The units of time to wait for a reply from the enosix framework |  | {nbsp}
+| Response Timeout a| Number |  The amount of time to wait for a reply from the enosix framework |  | {nbsp}
+| Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
+| Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
+| Reconnection Strategy a| * <<Reconnect>>
+* <<ReconnectForever>> |  A retry strategy in case of connectivity errors |  | {nbsp}
+|===
+
+=== Output
+
+[%autowidth.spread]
+|===
+| *Type* a| Binary
+| *Attributes Type* a| <<EnosixAttributes>>
+|===
+
+=== For Configurations
+
+* <<Config>> {nbsp}
+
+=== Throws
+
+* ENOSIX:CONNECTIVITY {nbsp}
+* ENOSIX:INTERRUPTED_ERROR {nbsp}
+* ENOSIX:PARSER_ERROR {nbsp}
+* ENOSIX:RESPONSE_TIMEOUT {nbsp}
+* ENOSIX:RETRY_EXHAUSTED {nbsp}
+* ENOSIX:XSD_NOT_FOUND {nbsp}
+
+
+[[Update]]
+== Update
+`<enosix:update>`
+
+
+Update operation is used to update detailed Rapid Integration Object using enisox SAP framework.
+
+
+=== Parameters
+
+[%header%autowidth.spread]
+|===
+| Name | Type | Description | Default Value | Required
+| Configuration | String | The name of the configuration to use. | | *x*{nbsp}
+| Config Ref a| ConfigurationProvider |  The name of the configuration to be used to execute this component |  | *x*{nbsp}
+| Streaming Strategy a| * <<RepeatableInMemoryStream>>
+* <<RepeatableFileStoreStream>>
+* non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
+| Type a| String |  The business object name |  | *x*{nbsp}
+| Payload a| Binary |  Input payload |  #[payload] | {nbsp}
+| Return Complete Document a| Boolean |  Return complete Document or not |  true | {nbsp}
+| Key a| String |  The ID of the object |  | *x*{nbsp}
+| Language a| String |  The language that should be used in the enosix framework |  | {nbsp}
+| Session Close a| Boolean |  Whether to leave the SAP session open or not |  | {nbsp}
+| Response Timeout Unit a| Enumeration, one of:
+
+** NANOSECONDS
+** MICROSECONDS
+** MILLISECONDS
+** SECONDS
+** MINUTES
+** HOURS
+** DAYS |  The units of time to wait for a reply from the enosix framework |  | {nbsp}
+| Response Timeout a| Number |  The amount of time to wait for a reply from the enosix framework |  | {nbsp}
 | Target Variable a| String |  The name of a variable on which the operation's output will be placed |  | {nbsp}
 | Target Value a| String |  An expression that will be evaluated against the operation's output and the outcome of that expression will be stored in the target variable |  #[payload] | {nbsp}
 | Reconnection Strategy a| * <<Reconnect>>
@@ -297,30 +545,6 @@ Searches for an SAP object via the enosix framework
 | Blocking a| Boolean | If false, the reconnection strategy will run in a separate, non-blocking thread |  | 
 |======================
 
-[[PoolingProfile]]
-=== Pooling Profile
-
-[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
-|======================
-| Field | Type | Description | Default Value | Required
-| Max Active a| Number | Controls the maximum number of Mule components that can be borrowed from a session at one time. When set to a negative value, there is no limit to the number of components that may be active at one time. When maxActive is exceeded, the pool is said to be exhausted. |  | 
-| Max Idle a| Number | Controls the maximum number of Mule components that can sit idle in the pool at any time. When set to a negative value, there is no limit to the number of Mule components that may be idle at one time. |  | 
-| Max Wait a| Number | Specifies the number of milliseconds to wait for a pooled component to become available when the pool is exhausted and the exhaustedAction is set to WHEN_EXHAUSTED_WAIT. |  | 
-| Min Eviction Millis a| Number | Determines the minimum amount of time an object may sit idle in the pool before it is eligible for eviction. When non-positive, no objects will be evicted from the pool due to idle time alone. |  | 
-| Eviction Check Interval Millis a| Number | Specifies the number of milliseconds between runs of the object evictor. When non-positive, no object evictor is executed. |  | 
-| Exhausted Action a| Enumeration, one of:
-
-** WHEN_EXHAUSTED_GROW
-** WHEN_EXHAUSTED_WAIT
-** WHEN_EXHAUSTED_FAIL | Specifies the behavior of the Mule component pool when the pool is exhausted. Possible values are: "WHEN_EXHAUSTED_FAIL", which will throw a NoSuchElementException, "WHEN_EXHAUSTED_WAIT", which will block by invoking Object.wait(long) until a new or idle object is available, or WHEN_EXHAUSTED_GROW, which will create a new Mule instance and return it, essentially making maxActive meaningless. If a positive maxWait value is supplied, it will block for at most that many milliseconds, after which a NoSuchElementException will be thrown. If maxThreadWait is a negative value, it will block indefinitely. |  | 
-| Initialisation Policy a| Enumeration, one of:
-
-** INITIALISE_NONE
-** INITIALISE_ONE
-** INITIALISE_ALL | Determines how components in a pool should be initialized. The possible values are: INITIALISE_NONE (will not load any components into the pool on startup), INITIALISE_ONE (will load one initial component into the pool on startup), or INITIALISE_ALL (will load all components in the pool on startup) |  | 
-| Disabled a| Boolean | Whether pooling should be disabled |  | 
-|======================
-
 [[ExpirationPolicy]]
 === Expiration Policy
 
@@ -382,5 +606,26 @@ Searches for an SAP object via the enosix framework
 ** KB
 ** MB
 ** GB | The unit in which maxInMemorySize is expressed |  | 
+|======================
+
+[[#root:messages]]
+=== #root:messages
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Messages a| <<MessagesType>> |  |  | x
+|======================
+
+[[MessagesType]]
+=== Messages Type
+
+[cols=".^20%,.^25%,.^30%,.^15%,.^10%", options="header"]
+|======================
+| Field | Type | Description | Default Value | Required
+| Message a| Enumeration, one of:
+
+** messages1
+** messages2 |  |  | 
 |======================
 

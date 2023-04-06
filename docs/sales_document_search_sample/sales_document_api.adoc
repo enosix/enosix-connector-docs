@@ -41,7 +41,7 @@ image::/docs/sales_document_search_sample/image/05_connector_search.png[Connecto
 <dependency>
     <groupId>com.enosix.mule</groupId>
 	<artifactId>enosix-connector</artifactId>
-	<version>1.0.0</version>
+	<version>2.0.0</version>
 	<classifier>mule-plugin</classifier>
 </dependency>
 ----
@@ -62,7 +62,7 @@ f. Go to TLS tab, select *Edit inline* and select Insecure option.
 g. Click *Test connection* operation, once connection tested successful, click *OK* button.
 h. Global configuration completed.
 +
-Security reason original url, username and password taken out from screenshot, to get an idea here is the screenshot with dummy values.
+
 +
 image::/docs/sales_document_search_sample/image/08_global_config.png[Gloabl config]
 
@@ -76,7 +76,7 @@ c. Enter Page size as `attributes.queryParams.pageSize`.
 d. Enter Page number as `attributes.queryParams.pageNumber`.
 e. Enter the following dataweave code into the Search input field. This dataweave code is creating XML input format required for connector.
 +
-.Search Input
+.Search Payload
 [source,dataweave]
 ----
 %dw 2.0
@@ -119,9 +119,6 @@ image::/docs/sales_document_search_sample/image/10_search_conf_complete.png[Sear
 %dw 2.0
 output application/json skipNullOn="everywhere"
 fun convert(strBoolean)  = if(strBoolean)  'X'  else ''
-
-%dw 2.0
-output application/json skipNullOn="everywhere"
 ---
  {
      "PageInfo": {
@@ -186,7 +183,7 @@ output application/json skipNullOn="everywhere"
 }
 ----
 +
-14. Now the code is completed for API implementation, run the project . Make sure flow started without any errors by checking the console logs.
+14. Now the code is completed for API implementation, save and run the project . Make sure flow started without any errors by checking the console logs.
 15. Send a request from postman / browser in this format  http://localhost:8081/api/search/salesdocument?soldToParty=2200&pageSize=100&pageNumber=1
 
 
