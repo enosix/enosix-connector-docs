@@ -203,7 +203,7 @@ image::/docs/user_manual/image/07_Update_Config.png[Update Config]
 
 ===== *Command Simulate Flow*
 
- Simulate the sales document in SAP (Not created in SAP) and used it for any integrated external / internal application.
+ Simulate the sales document in SAP (Not created in SAP) and use it for any integrated external / internal application.
 
 image::/docs/user_manual/image/08_Command_Simulate.png[Command Simulate Flow]
 image::/docs/user_manual/image/08_Command_Config.png[Command Config]

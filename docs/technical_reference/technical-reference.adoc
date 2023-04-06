@@ -153,7 +153,8 @@ Create operation is used to create detailed Rapid Integration Object using enosi
 * <<RepeatableFileStoreStream>>
 * non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
 | Type a| String |  The business object name |  | *x*{nbsp}
-| Payload a| Binary |  Create operation input payload |  #[payload] | {nbsp}
+| Payload a| Binary |  Input payload |  #[payload] | {nbsp}
+| Return Complete Document a| Boolean |  Return complete Document or not |  true | {nbsp}
 | Language a| String |  The language that should be used in the enosix framework |  | {nbsp}
 | Session Close a| Boolean |  Whether to leave the SAP session open or not |  | {nbsp}
 | Response Timeout Unit a| Enumeration, one of:
@@ -176,7 +177,7 @@ Create operation is used to create detailed Rapid Integration Object using enosi
 
 [%autowidth.spread]
 |===
-| *Type* a| <<#root:messages>>
+| *Type* a| Binary
 | *Attributes Type* a| <<EnosixAttributes>>
 |===
 
@@ -381,7 +382,8 @@ Update operation is used to update detailed Rapid Integration Object using eniso
 * <<RepeatableFileStoreStream>>
 * non-repeatable-stream |  Configure if repeatable streams should be used and their behaviour |  | {nbsp}
 | Type a| String |  The business object name |  | *x*{nbsp}
-| Payload a| Binary |  Create operation input payload |  #[payload] | {nbsp}
+| Payload a| Binary |  Input payload |  #[payload] | {nbsp}
+| Return Complete Document a| Boolean |  Return complete Document or not |  true | {nbsp}
 | Key a| String |  The ID of the object |  | *x*{nbsp}
 | Language a| String |  The language that should be used in the enosix framework |  | {nbsp}
 | Session Close a| Boolean |  Whether to leave the SAP session open or not |  | {nbsp}
@@ -405,7 +407,7 @@ Update operation is used to update detailed Rapid Integration Object using eniso
 
 [%autowidth.spread]
 |===
-| *Type* a| <<#root:messages>>
+| *Type* a| Binary
 | *Attributes Type* a| <<EnosixAttributes>>
 |===
 
