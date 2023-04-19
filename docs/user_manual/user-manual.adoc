@@ -39,7 +39,7 @@ For hardware and software requirements, please visit the https://docs.mulesoft.c
 [%header%autowidth.spread]
 |====
 |Application/Service |Version
-|Mule Runtime |4.4.x and later
+|Mule Runtime |4.3.x and later
 |Anypoint Studio | 7.13.x and later
 |====
 
