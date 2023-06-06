@@ -23,6 +23,7 @@ The enosix connector supports six operations:
 * *Create*: This operation is used to create detailed RIO in enosix SAP framework, for a given RIO type.
 * *Update*: This operation is used to update the RIO based on the RIO type and key provided in enosix SAP framework.
 * *Command*: This operation is used to run set of commands supported by enosix SAP framework on RIO's.
+* *Execute*: This operation is used to call the RFC / BAPI functions from SAP using enosix SAP framework.
 
 image::/docs/user_manual/image/00_operations.png[Operations]
 
@@ -61,7 +62,7 @@ Check the `pom.xml` file and make sure you have the dependency:
 <dependency>
   <groupId>com.enosix.mule</groupId>
   <artifactId>enosix-connector</artifactId>
-  <version>2.0.0</version>
+  <version>3.0.0</version>
   <classifier>mule-plugin</classifier>
 </dependency>
 ----
@@ -207,5 +208,12 @@ image::/docs/user_manual/image/07_Update_Config.png[Update Config]
 
 image::/docs/user_manual/image/08_Command_Simulate.png[Command Simulate Flow]
 image::/docs/user_manual/image/08_Command_Config.png[Command Config]
+
+===== *Execute BAPI_MATERIAL_AVAILABILITY RFC flow*
+
+ Call the material availability BAPI function using Enosix SAP framework.
+
+image::/docs/user_manual/image/09_RFC_Flow.png[RFC Call Flow]
+image::/docs/user_manual/image/09_RFC_Configuration.png[RFC Call Config]
 
 
